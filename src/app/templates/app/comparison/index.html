@@ -65,7 +65,11 @@
                     <thead>
                         <tr>
                             <th></th>
-                            <th>School 1</th>
+                            {% if compared_school_list|length >= 1 %}
+                                <th><a href="{% url 'app:school_detail' school.id %}">
+                                                <img src="{% static '/catholicHigh.jpg' %}" />
+                                            </a></th>
+                            {% endif %}
                             {% if compared_school_list|length >= 2 %}
                                 <th>School 2</th>
                             {% endif %}
