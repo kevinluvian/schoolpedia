@@ -66,18 +66,18 @@
                         <tr>
                             <th></th>
                             {% if compared_school_list|length >= 1 %}
-                                <th><a href="{% url 'app:school_detail' school.id %}">
-                                                <img src="{% static '/catholicHigh.jpg' %}" />
-                                            </a></th>
+                                <th>
+                                    <img src="{% static '/catholicHigh.jpg' %}" />
+                                </th>
                             {% endif %}
                             {% if compared_school_list|length >= 2 %}
-                                <th>School 2</th>
+                                <th><img src="{% static '/catholicHigh.jpg' %}" /></th>
                             {% endif %}
                             {% if compared_school_list|length >= 3 %}
-                                <th>School 3</th>
+                                <th><img src="{% static '/catholicHigh.jpg' %}" /></th>
                             {% endif %}
                             {% if compared_school_list|length >= 4 %}
-                                <th>School 4</th>
+                                <th><img src="{% static '/catholicHigh.jpg' %}" /></th>
                             {% endif %}
                         </tr>
                     </thead>
