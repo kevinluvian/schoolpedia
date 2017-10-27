@@ -53,8 +53,8 @@
                 <div class="two wide column"></div>
             </div>
         </div>
-        <!--<div style="flex: 1">-->
-            {% if compared_school_list|length == 0 %}
+    </div>
+  {% if compared_school_list|length == 0 %}
                 <div class="ui header">
                     <center>
                         You haven't added any school to compare list
@@ -64,7 +64,6 @@
                 <table class="ui definition table">
                     <thead>
                         <tr>
-                            <th></th>
                             {% if compared_school_list|length >= 1 %}
                                 <th>
                                     <img src="{% static '/catholicHigh.jpg' %}" />
@@ -100,6 +99,4 @@
                     </tbody>
                 </table>
             {% endif %}
-        <!--</div>-->
-    </div>
 {% endblock %}
