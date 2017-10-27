@@ -4,9 +4,40 @@
 <script type="text/javascript">
 $(document)
     .ready(function() {
-        $("#jqtest").html("Jquery installed successfully");
-      }
-           );
+      $('.ui.form')
+        .form({
+          fields: {
+            email: {
+              identifier  : 'username',
+              rules: [
+                {
+                  type   : 'empty',
+                  prompt : 'Please enter your e-mail'
+                },
+                {
+                  type   : 'email',
+                  prompt : 'Please enter a valid e-mail'
+                }
+              ]
+            },
+            password: {
+              identifier  : 'password',
+              rules: [
+                {
+                  type   : 'empty',
+                  prompt : 'Please enter your password'
+                },
+                {
+                  type   : 'length[6]',
+                  prompt : 'Your password must be at least 6 characters'
+                }
+              ]
+            }
+          }
+        })
+      ;
+    })
+  ;
 </script>
 <p id="jqtest"></p>
 <div class="ui center aligned grid" style="margin-top: auto; margin-bottom: auto; width: 100%">
