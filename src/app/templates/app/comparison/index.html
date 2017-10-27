@@ -53,50 +53,53 @@
                 <div class="two wide column"></div>
             </div>
         </div>
-    </div>
-  {% if compared_school_list|length == 0 %}
+        <div style="flex: 1">
+              {% if compared_school_list|length == 0 %}
                 <div class="ui header">
                     <center>
                         You haven't added any school to compare list
                     </center>
                 </div>
             {% else %}
-                <table class="ui definition table">
+                <table class="ui table" style="width:90%">
                     <thead>
                         <tr>
                             {% if compared_school_list|length >= 1 %}
                                 <th>
-                                    <img src="{% static '/catholicHigh.jpg' %}" />
+                                    <img src="{% static '/catholicHigh.jpg' %}" style="display:block; width:100%; height:auto;"/>
                                 </th>
                             {% endif %}
                             {% if compared_school_list|length >= 2 %}
-                                <th><img src="{% static '/catholicHigh.jpg' %}" /></th>
+                                <th><img src="{% static '/catholicHigh.jpg' %}" style="display:block; width:100%; height:auto;"/></th>
                             {% endif %}
                             {% if compared_school_list|length >= 3 %}
-                                <th><img src="{% static '/catholicHigh.jpg' %}" /></th>
+                                <th><img src="{% static '/catholicHigh.jpg' %}" style="display:block; width:100%; height:auto;"/></th>
                             {% endif %}
                             {% if compared_school_list|length >= 4 %}
-                                <th><img src="{% static '/catholicHigh.jpg' %}" /></th>
+                                <th><img src="{% static '/catholicHigh.jpg' %}" style="display:block; width:100%; height:auto;"/></th>
                             {% endif %}
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             {% for school in compared_school_list %}
-                                <td><a href="{% url 'app:school_detail' school.id %}">{{ school.school_name }}</a></td>
+                                <td class="center aligned"><a href="{% url 'app:school_detail' school.id %}">{{ school.school_name }}</a></td>
                             {% endfor %}
                         </tr>
                         <tr>
                             {% for school in compared_school_list %}
-                                <td>{{ school.postal_code }}</td>
+                                <td class="center aligned">Postal: {{ school.postal_code }}</td>
                             {% endfor %}
                         </tr>
                         <tr>
                             {% for school in compared_school_list %}
-                                <td>{{ school.zone_code }}</td>
+                                <td class="center aligned">Zone: {{ school.zone_code }}</td>
                             {% endfor %}
                         </tr>
                     </tbody>
                 </table>
             {% endif %}
+        </div>
+    </div>
+
 {% endblock %}
