@@ -53,7 +53,7 @@
                 <div class="two wide column"></div>
             </div>
         </div>
-        <div style="flex: 1">
+        <!--<div style="flex: 1">-->
             {% if compared_school_list|length == 0 %}
                 <div class="ui header">
                     <center>
@@ -69,6 +69,7 @@
                             <th><a href="{% url 'app:school_detail' school.id %}">
                                                 <img src="{% static '/catholicHigh.jpg' %}" />
                                             </a></th>
+				{% endif %}
                             {% if compared_school_list|length >= 2 %}
                                 <th><a href="{% url 'app:school_detail' school.id %}">
                                                 <img src="{% static '/catholicHigh.jpg' %}" />
@@ -106,11 +107,9 @@
                             {% endfor %}
                         </tr>
                     </tbody>
-						
-					
-					</table>
+		</table>
 					 
             {% endif %}
-        </div>
+        <!--</div>-->
     </div>
 {% endblock %}
