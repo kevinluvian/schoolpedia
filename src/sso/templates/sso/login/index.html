@@ -1,6 +1,45 @@
 {% extends 'app/header_base.html' %}
 {% block content %}
 
+ <script>
+$(document)
+.ready(function() {
+  $('.ui.form')
+    .form({
+      fields: {
+        email: {
+          identifier  : 'username',
+          rules: [
+            {
+              type   : 'empty',
+              prompt : 'Please enter your e-mail'
+            },
+            {
+              type   : 'email',
+              prompt : 'Please enter a valid e-mail'
+            }
+          ]
+        },
+        password: {
+          identifier  : 'password',
+          rules: [
+            {
+              type   : 'empty',
+              prompt : 'Please enter your password'
+            },
+            {
+              type   : 'length[6]',
+              prompt : 'Your password must be at least 6 characters'
+            }
+          ]
+        }
+      }
+    })
+  ;
+})
+;
+</script>
+
 <div class="ui center aligned grid" style="margin-top: auto; margin-bottom: auto; width: 100%">
         <div class="three wide column"></div>
         <div class="ten wide column">
@@ -18,7 +57,7 @@
                     <p>Please login to see this page.</p>
                 {% endif %}
             {% endif %}
-            <form class="ui large form">
+            <form class="ui large form" method="POST">
                 <div class="ui stacked segment">
                     <div class="field">
                         <div class="ui left icon input">
@@ -36,6 +75,7 @@
                     <input type="hidden" name="next" value="/"></input>
                     <button class="ui fluid large teal submit button">Login</button>
                 </div>
+                <div class="ui error message"></div>
                 {% if form.errors %}
                     <div class="ui error message">
                         <ul class="list">
