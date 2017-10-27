@@ -62,7 +62,7 @@
                 </div>
             {% else %}
             <center>
-                <table class="ui table" style="width:80%">
+                <table class="ui definition table" style="width:70%">
                     <thead>
                         <tr>
                             {% if compared_school_list|length >= 1 %}
@@ -83,18 +83,21 @@
                     </thead>
                     <tbody>
                         <tr>
+                            <td>School Name</td>
                             {% for school in compared_school_list %}
                                 <td class="center aligned"><a href="{% url 'app:school_detail' school.id %}">{{ school.school_name }}</a></td>
                             {% endfor %}
                         </tr>
                         <tr>
+                            <td>Postal Code</td>
                             {% for school in compared_school_list %}
-                                <td class="center aligned">Postal: {{ school.postal_code }}</td>
+                                <td class="center aligned">{{ school.postal_code }}</td>
                             {% endfor %}
                         </tr>
                         <tr>
+                            <td>Zone Code</td>
                             {% for school in compared_school_list %}
-                                <td class="center aligned">Zone: {{ school.zone_code }}</td>
+                                <td class="center aligned">{{ school.zone_code }}</td>
                             {% endfor %}
                         </tr>
                     </tbody>
