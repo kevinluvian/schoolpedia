@@ -85,19 +85,19 @@
                         <tr>
                             <td>School Name</td>
                             {% for school in compared_school_list %}
-                                <td class="center aligned"><a href="{% url 'app:school_detail' school.id %}">{{ school.school_name }}</a></td>
+                                <td><a href="{% url 'app:school_detail' school.id %}">{{ school.school_name }}</a></td>
                             {% endfor %}
                         </tr>
                         <tr>
                             <td>Postal Code</td>
                             {% for school in compared_school_list %}
-                                <td class="center aligned">{{ school.postal_code }}</td>
+                                <td>{{ school.postal_code }}</td>
                             {% endfor %}
                         </tr>
                         <tr>
                             <td>Zone Code</td>
                             {% for school in compared_school_list %}
-                                <td class="center aligned">{{ school.zone_code }}</td>
+                                <td>{{ school.zone_code }}</td>
                             {% endfor %}
                         </tr>
                     </tbody>
