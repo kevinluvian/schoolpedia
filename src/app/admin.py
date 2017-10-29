@@ -6,7 +6,7 @@ from app.models import (
     Enquiry,
     EnquiryAnswer,
     Bookmark,
-    CommentReport
+    ReportComment
 )
 
 
@@ -34,8 +34,8 @@ class BookmarkAdmin(admin.ModelAdmin):
     list_display = [x.name for x in Bookmark._meta.fields]
 
 
-class CommentReportAdmin(admin.ModelAdmin):
-    list_display = [x.name for x in CommentReport._meta.fields]
+class ReportCommentAdmin(admin.ModelAdmin):
+    list_display = [x.name for x in ReportComment._meta.fields]
 
 
 admin.site.register(School,
@@ -50,5 +50,5 @@ admin.site.register(EnquiryAnswer,
                     EnquiryAnswerAdmin)
 admin.site.register(Bookmark,
                     BookmarkAdmin)
-admin.site.register(CommentReport,
-                    CommentReportAdmin)
+admin.site.register(ReportComment,
+                    ReportCommentAdmin)

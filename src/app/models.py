@@ -85,7 +85,7 @@ class Bookmark(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
 
-class CommentReport(models.Model):
+class ReportComment(models.Model):
     comment = models.ForeignKey('app.SchoolComment')
     reported_by = models.ForeignKey('sso.User')
     created_at = models.DateTimeField(auto_now_add=True)
