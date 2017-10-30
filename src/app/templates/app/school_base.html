@@ -10,10 +10,10 @@
             <a href="{% url 'app:home' %}">
                 <img src="/static/logo.png" height="60" />
             </a>
-            <a class="item" href="{% url 'app:school_list' %}">Schools</a>
-            <a class="item" href="{% url 'app:bookmark_list' %}">Bookmark</a>
-            <a class="item" href="{% url 'app:compare_schools' %}">Comparison</a>
-            <a class="item" href="{% url 'app:contact_us' %}">Contact Us</a>
+            <a {% block nav_school%}{% endblock %} class="item" href="{% url 'app:school_list' %}">Schools</a>
+            <a {% block nav_bookmark%}{% endblock %} class="item" href="{% url 'app:bookmark_list' %}">Bookmark</a>
+            <a {% block nav_compare%}{% endblock %} class="item" href="{% url 'app:compare_schools' %}">Comparison</a>
+            <a {% block nav_contact%}{% endblock %} class="item" href="{% url 'app:contact_us' %}">Contact Us</a>
             {% if user.is_authenticated %}
                 <div class="item">
                     <div class="ui buttons">
