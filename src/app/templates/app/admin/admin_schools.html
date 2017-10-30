@@ -1,12 +1,6 @@
 {% extends 'app/admin_base.html' %}
 
 {% block content %}
-<script type="text/javascript">
-        $(document).ready(function () {
-            // All your normal JS code goes in here
-            $('table').tablesort()
-        });
-</script>
     <div class="ui grid">
         <div class="row">
             <h1 class="ui huge header">Schools</h1>
@@ -14,15 +8,15 @@
 
         <div class="ui divider"></div>
         <div class="row">
-            <table class="ui single line striped sortable selectable icon table">
+            <table class="ui single line striped selectable icon table">
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th class="sorted ascending">School Name</th>
-                        <th class="no-sort">Postal Code</th>
-                        <th class="no-sort">Stream</th>
-                        <th class="no-sort">Cut Off Points</th>
-                        <th class="no-sort">Action</th>
+                        <th>School Name</th>
+                        <th>Postal Code</th>
+                        <th>Stream</th>
+                        <th>Cut Off Points</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
