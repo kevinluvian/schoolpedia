@@ -73,7 +73,7 @@
     <div class="ui inverted huge borderless fixed fluid menu">
         <a class="header item" href="{% url 'app:admin' %}">SchoolPedia</a>
         <div class="right menu">
-            <a class="item">Logout</a>
+            <a href="{% url 'sso:logout' %}" class="item">Logout</a>
         </div>
     </div>
     <div class="ui grid">
