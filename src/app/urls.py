@@ -1,6 +1,6 @@
 from django.conf.urls import url
 from app.views import scheduler, base
-from app.views import public_view, user_view
+from app.views import public_view, user_view, admin_view
 
 app_name = 'app'
 urlpatterns = [
@@ -15,8 +15,12 @@ urlpatterns = [
 
     url(r'^compare_schools/$', public_view.compare_schools, name='compare_schools'),
     url(r'^contact_us/$', public_view.contact_us, name='contact_us'),
+
     # user views
     url(r'^bookmarks/$', user_view.bookmark_list, name='bookmark_list'),
     url(r'^bookmarks/(?P<school_id>\d+)/bookmark/$', user_view.bookmark, name='bookmark'),
     url(r'^bookmarks/(?P<school_id>\d+)/unbookmark/$', user_view.unbookmark, name='unbookmark'),
+
+    # admin views
+    url(r'^admin/$', admin_view.index, name='admin')
 ]

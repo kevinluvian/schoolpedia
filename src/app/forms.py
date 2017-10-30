@@ -1,8 +1,14 @@
 from django import forms
-from app.models import Enquiry
-import pdb
+from app.models import Enquiry, SchoolComment
+
 
 class EnquiryForm(forms.ModelForm):
     class Meta:
         model = Enquiry
-        fields = ('email', 'description')
+        fields = ('name', 'email', 'message')
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = SchoolComment
+        fields = ('rating', 'message',)

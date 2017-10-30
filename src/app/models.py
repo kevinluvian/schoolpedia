@@ -1,4 +1,6 @@
 from django.db import models
+from django.core.validators import MinValueValidator, MaxValueValidator
+from django.db.models import Avg
 
 
 class School(models.Model):
@@ -43,6 +45,10 @@ class School(models.Model):
     class Meta:
         ordering = ['school_name']
 
+    def get_overall_rating(self):
+        print(self.schoolcomment_set.all().aggregate(Avg('rating'))['rating__avg'])
+        return self.schoolcomment_set.all().aggregate(Avg('rating'))['rating__avg']
+
 
 class SchedulerLog(models.Model):
     type = models.CharField(
@@ -61,14 +67,22 @@ class SchedulerLog(models.Model):
 
 class SchoolComment(models.Model):
     school = models.ForeignKey('app.School')
-    description = models.TextField()
+    rating = models.IntegerField(
+        default=1,
+        validators=[
+            MaxValueValidator(5),
+            MinValueValidator(1)
+        ]
+    )
+    message = models.TextField()
     created_by = models.ForeignKey('sso.User')
     created_at = models.DateTimeField(auto_now_add=True)
 
 
 class Enquiry(models.Model):
+    name = models.CharField(max_length=200)
     email = models.EmailField()
-    description = models.TextField()
+    message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
 

@@ -3,7 +3,7 @@
     <body style="display: flex; flex-direction: column;">
         <div class="ui attached secondary menu" style="border: none;">
         </div>
-        <div class="ui secondary menu container">
+        <div class="ui secondary menu">
             <div class="item"></div>
             <a href="{% url 'app:home' %}">
                 <img src="/static/logo.png" height="60" />
@@ -11,7 +11,6 @@
             <a class="item" href="{% url 'app:school_list' %}">Schools</a>
             <a class="item" href="{% url 'app:bookmark_list' %}">Bookmark</a>
             <a class="item" href="{% url 'app:compare_schools' %}">Comparison</a>
-            <a class="item" href="#">FAQ</a>
             <a class="item" href="{% url 'app:contact_us' %}">Contact Us</a>
             {% if user.is_authenticated %}
                 <div class="item">

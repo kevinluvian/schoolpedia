@@ -20,15 +20,26 @@
             function showPosition(position) {
                 var latitude = position.coords.latitude.toString()
                 var longitude = position.coords.longitude.toString()
-                window.location.replace("?latitude=" + latitude.toString() + "&longitude=" + longitude);
+                var searchParams = new URLSearchParams(window.location.search);
+                searchParams.set('latitude', latitude.toString())
+                searchParams.set('longitude', longitude.toString())
+                window.location.search = searchParams.toString()
             }
             function error(err) {
                 console.warn(`ERROR(${err.code}): ${err.message}`);
-                run()
+                setTimeout(run, 1000);
             }
             run()
         </script>
     {% endif %}
+    <script>
+        $(document).ready(function () {
+            $('.writerating').rating('setting', 'onRate', function(value) {
+                $('#id_rating')[0].value = value;
+            });
+            $('.readonlyrating').rating('disable', true);
+        });
+    </script>
 {% endblock %}
 
 {% block content %}
@@ -88,7 +99,20 @@
                                 <p>Vice Principal: {{ school.fourth_vp_name }}</p>
                                 <p>Vice Principal: {{ school.fifth_vp_name }}</p>
                             </div>
-                            <div class="four wide column"></div>
+                            <div class="sixteen wide column">
+                                <h2>Reviews/ Comments</h2>
+                                <div class="ui grid centered" style="margin-top:5%">
+                                    <div class="ui small statistic segment">
+                                        <div class="label">
+                                            Overall rating
+                                        </div>
+                                        <div class="value">
+                                            <div class="rating largetext">{{ school.get_overall_rating|floatformat:"1" }}</div>
+                                            <div class="ui star readonlyrating rating" data-rating="{{ school.get_overall_rating|floatformat:'0' }}" data-max-rating="5"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="four wide column"></div>
                             <div class="four wide column"></div>
                             <div class="four wide column"></div>
@@ -96,6 +120,51 @@
                             <div class="four wide column"></div>
                         </div>
                     </div>
+                </div>
+                <div class="two wide column"></div>
+                <div class="two wide column"></div>
+                <div class="twelve wide column">
+                    <center><div class="ui header">Comments</div></center>
+                    <div class="ui two columns grid">
+                        {% for comment in school.schoolcomment_set.all %}
+                            <div class="ui column">
+                                <div class="ui segment">
+                                    <div class="ui comments">
+                                        <div class="comment">
+                                            <div class="content">
+                                                <a class="author">{{ comment.created_by }}</a>
+                                                <div class="text">{{ comment.message }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="two wide column"></div>
+                <div class="two wide column"></div>
+                <div class="twelve wide column">
+                    <div class="ui segment">
+                        <center>
+                            <div class="ui header">
+                                Comment
+                            </div>
+                        </center>
+                        <div class="ui hidden divider"></div>
+                        <form class="ui form" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="rating" value="3" required="" id="id_rating">
+                            <div class="ui field">
+                                <center>
+                                    <div class="ui star writerating rating" data-rating="3" data-max-rating="5"></div>
+                                </center>
+                            </div>
+                            <div class="ui field">
+                                {{ comment_form.message }}
+                            </div>
+                            <center><button class="ui button" type="submit">Submit</button></center>
+                        </form>
                     </div>
                 </div>
                 <div class="two wide column"></div>
