@@ -5,7 +5,7 @@ from django.shortcuts import (
 )
 from django.urls import reverse
 from app.models import (
-    School, Bookmark
+    School, Bookmark, SchoolComment, ReportComment
 )
 from app import utils
 from django.contrib.auth.decorators import login_required
@@ -52,20 +52,17 @@ def bookmark_list(request):
     return render(request, 'app/bookmark/index.html', {'bookmark_list': bookmark_list})
 
 
-def comment_school(request):
-    pass
-
-
-def delete_comment(request):
-    pass
-
-
-def edit_comment(request):
-    pass
-
-
-def report_comment(request):
-    pass
+def report_comment(request, comment_id):
+    comment = get_object_or_404(SchoolComment, id=comment_id)
+    try:
+        new_report = ReportComment.objects.get(reported_by=request.user, comment=comment)
+    except ReportComment.DoesNotExist:
+        new_report = ReportComment(
+            reported_by=request.user,
+            comment=comment
+        )
+        new_report.save()
+    return HttpResponseRedirect(reverse('app:school_detail', kwargs={'school_id': comment.school.id}))
 
 
 def change_password(request):

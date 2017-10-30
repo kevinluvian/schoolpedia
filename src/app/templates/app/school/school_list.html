@@ -20,11 +20,14 @@
             function showPosition(position) {
                 var latitude = position.coords.latitude.toString()
                 var longitude = position.coords.longitude.toString()
-                window.location.replace("?latitude=" + latitude.toString() + "&longitude=" + longitude);
+                var searchParams = new URLSearchParams(window.location.search);
+                searchParams.set('latitude', latitude.toString())
+                searchParams.set('longitude', longitude.toString())
+                window.location.search = searchParams.toString()
             }
             function error(err) {
                 console.warn(`ERROR(${err.code}): ${err.message}`);
-                run()
+                setTimeout(run, 1000);
             }
             run()
         </script>
