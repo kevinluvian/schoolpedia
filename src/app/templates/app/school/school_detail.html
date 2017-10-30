@@ -179,7 +179,76 @@
                     </div>
                 </div>
                 <div class="two wide column"></div>
+            
+            <div class="four wide column"></div> <!-- yongrui test-->
+                <div class="eight wide column">
+                    <div class="ui segment">
+						<h2>Reviews</h2>
+                                <div class="ui grid centered" style="margin-top:5%">
+                                    <div class="ui small statistic segment">
+                                        <div class="label">
+                                            Overall rating
+                                        </div>
+                                        <div class="value">
+                                            <div class="rating largetext">{{ school.get_overall_rating|floatformat:"1" }}</div>
+                                            <div class="ui star readonlyrating rating" data-rating="{{ school.get_overall_rating|floatformat:'0' }}" data-max-rating="5"></div>
+                                        </div>
+                                    </div>
+                                </div>
+						<center><div class="ui header">Comments</div></center>
+						<div class="ui one columns grid">
+							{% for comment in school.schoolcomment_set.all %}
+								<div class="ui column">
+									<div class="ui segment">
+										<div class="ui comments">
+											<div class="comment">
+												<div class="content">
+													<div class="author">
+														{{ comment.created_by }}
+													</div>
+													<div class="text">{{ comment.message }}</div>
+													<a href="{% url 'app:report_comment' comment.id %}" class="ui button">Report</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							{% endfor %}
+						</div>
+                        <center>
+                            <div class="ui header">
+                                 <center><button class="ui button" id="reviewBtn" onclick="writeReview()">Write a Review</button></center>
+                            </div>
+                        </center>
+                        <div class="ui hidden divider"></div>
+                        <form class="ui form" style="display:none" id="reviewBox" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="rating" value="3" required="" id="id_rating">
+                            <div class="ui field">
+                                <center>
+                                    <div class="ui star writerating rating" data-rating="3" data-max-rating="5"></div>
+                                </center>
+                            </div>
+                            <div class="ui field">
+                                {{ comment_form.message }}
+                            </div>
+                            <center><button class="ui button" type="submit">Submit</button></center>
+                        </form>
+                    </div>
+                </div>
+                <div class="four wide column"></div>
+				
+				
             </div>
         </div>
     </div>
+	
+	<script>
+		function writeReview(){
+			var x = document.getElementById("reviewBox");
+			var y = document.getElementById("reviewBtn");
+			x.style.display = "block";
+			y.style.display = "none";
+		}
+	</script>
 {% endblock %}
