@@ -5,18 +5,88 @@ from app import utils
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.db.models import Q
 
 
 def school_list(request):
     latitude, longitude, has_coordinate = utils.get_coordinate_from_request(request)
-    kwargs = {}
+    queryset = School.objects.all()
 
     if request.GET:
         if 'school_name' in request.GET:
-            kwargs['school_name__icontains'] = request.GET['school_name']
+            queryset = queryset.filter(school_name__icontains=request.GET['school_name'])
+        if 'score' in request.GET:
+            try:
+                score = int(request.GET['score'])
+                # filter score ada diantara express, normalacademic, atau normal technical
+                # ga boleh null
+                queryset = queryset.filter(
+                    express_nonaff_lower__isnull=False,
+                    express_nonaff_upper__isnull=False,
+                    normal_technical_nonaff_upper__isnull=False,
+                    normal_technical_nonaff_lower__isnull=False,
+                    normal_academic_nonaff_upper__isnull=False,
+                    normal_academic_nonaff_lower__isnull=False
+                )
+                # ada diantara
+                queryset = queryset.filter(
+                    (Q(express_nonaff_lower__lte=score) & Q(express_nonaff_upper__gte=score)) |
+                    (Q(normal_technical_nonaff_upper__gte=score) & Q(normal_technical_nonaff_lower__lte=score)) |
+                    (Q(normal_academic_nonaff_upper__gte=score) & Q(normal_academic_nonaff_lower__lte=score))
+                )
+            except ValueError:
+                pass
+        if 'distance' in request.GET and 'latitude' in request.GET and 'longitude' in request.GET:
+            distance = float(request.GET['distance'])
+            latitude = float(request.GET['latitude'])
+            longitude = float(request.GET['longitude'])
+
+            degreediff = distance / 111
+            queryset = queryset.filter(
+                lat__isnull=False,
+                lng__isnull=False,
+            )
+            queryset = queryset.filter(
+                Q(lng__lte=longitude + degreediff) &
+                Q(lng__gte=longitude - degreediff) &
+                Q(lat__lte=latitude + degreediff) &
+                Q(lat__gte=latitude - degreediff)
+            )
+
+        if 'zoneNorth' in request.GET:
+            queryset = queryset.filter(~Q(zone_code='NORTH'))
+
+        if 'zoneSouth' in request.GET:
+            queryset = queryset.filter(~Q(zone_code='SOUTH'))
+
+        if 'zoneEast' in request.GET:
+            queryset = queryset.filter(~Q(zone_code='EAST'))
+
+        if 'zoneWest' in request.GET:
+            queryset = queryset.filter(~Q(zone_code='WEST'))
+
+        if 'spIP' in request.GET:
+            queryset = queryset.filter(ip_ind='No')
+
+        if 'spSAP' in request.GET:
+            queryset = queryset.filter(sap_ind='No')
+
+        if 'chineseMT' not in request.GET:
+            queryset = queryset.filter(
+                Q(mothertongue1_code='Chinese') | Q(mothertongue2_code='Chinese') | Q(mothertongue3_code='Chinese')
+            )
+
+        if 'malayMT' not in request.GET:
+            queryset = queryset.filter(
+                Q(mothertongue1_code='Malay') | Q(mothertongue2_code='Malay') | Q(mothertongue3_code='Malay')
+            )
+
+        if 'tamilMT' in request.GET:
+            queryset = queryset.filter(
+                Q(mothertongue1_code='Tamil') | Q(mothertongue2_code='Tamil') | Q(mothertongue3_code='Tamil')
+            )
 
     # queryset and pagination
-    queryset = School.objects.filter(**kwargs)
     paginator = Paginator(queryset, 10)  # one page contains 10 items
     page = request.GET.get('page')
     try:
@@ -30,12 +100,16 @@ def school_list(request):
 
     compare_school_id_list = request.session.get('compare_school_id_list', [])
 
+    params_text = ''.join(['&{}={}'.format(x[0], x[1]) for x in request.GET.items() if x[0] != 'page'])
+
     return render(request, 'app/school/school_list.html', {
         'school_list': school_list,
         'allow_compare': len(compare_school_id_list) < 4,
         'has_coordinate': has_coordinate,
         'latitude': latitude,
-        'longitude': longitude
+        'longitude': longitude,
+        'params_text': params_text,
+        'params': request.GET
     })
 
 
