@@ -40,6 +40,16 @@ class School(models.Model):
     mothertongue2_code = models.TextField()
     mothertongue3_code = models.TextField()
     special_sdp_offered = models.TextField()
+
+    lat = models.FloatField(default=None, null=True, blank=True)
+    lng = models.FloatField(default=None, null=True, blank=True)
+    express_nonaff_lower = models.IntegerField(default=None, null=True, blank=True)
+    express_nonaff_upper = models.IntegerField(default=None, null=True, blank=True)
+    normal_technical_nonaff_upper = models.IntegerField(default=None, null=True, blank=True)
+    normal_technical_nonaff_lower = models.IntegerField(default=None, null=True, blank=True)
+    normal_academic_nonaff_upper = models.IntegerField(default=None, null=True, blank=True)
+    normal_academic_nonaff_lower = models.IntegerField(default=None, null=True, blank=True)
+    logo_name = models.CharField(max_length=300, default='no-img.jpg')
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

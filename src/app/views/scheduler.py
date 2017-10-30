@@ -57,6 +57,11 @@ def insert_school_to_db(school):
             print('Key not found! ', key)
             # TODO: add error here
 
+    # if the school is not secondary, skip it
+    if ('mainlevel_code' in school_kwargs and
+            school_kwargs['mainlevel_code'] != 'SECONDARY' and school_kwargs['mainlevel_code'] != 'MIXED LEVEL'):
+        return
+
     # try to find if school already exists
     try:
         # if exists, check whether the data is updated

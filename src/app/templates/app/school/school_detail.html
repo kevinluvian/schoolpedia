@@ -33,13 +33,18 @@
                 setTimeout(run, 1000);
             }
             run()
-            
+
              // $(document).ready(function () {
             // All your normal JS code goes in here
           //  $(".rating").rating();
         });
         </script>
     {% endif %}
+    <script
+        async
+        defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUH4ybclQQPb9WiYYoY1gMLNyq3WaUQ1E&callback=initMap">
+    </script>
     <script>
         $(document).ready(function () {
             $('.writerating').rating('setting', 'onRate', function(value) {
@@ -47,6 +52,27 @@
             });
             $('.readonlyrating').rating('disable', true);
         });
+        function initMap() {
+            var center = {
+                lat: {{ school.lat }},
+                lng: {{ school.lng }}
+            };
+
+            var map = new google.maps.Map(document.getElementById('map'), {
+              zoom: 13,
+              center: center
+            });
+
+
+            var marker = new google.maps.Marker({
+                position: {
+                    lat: {{ school.lat }},
+                    lng: {{ school.lng }}
+                },
+                map: map,
+                title: "{{ school.school_name }}"
+            });
+        }
     </script>
 {% endblock %}
 
@@ -65,9 +91,11 @@
                 {% endif %}
                 <div class="two wide column"></div>
                 <div class="twelve wide column">
-                    {% if has_coordinate == True %}
-                        [DEBUG] location: {{ latitude }}, {{ longitude}}
-                    {% endif %}
+                    {% comment %}
+                        {% if has_coordinate == True %}
+                            [DEBUG] location: {{ latitude }}, {{ longitude}}
+                        {% endif %}
+                    {% endcomment %}
                 </div>
                 <div class="two wide column"></div>
             </div>
@@ -78,7 +106,7 @@
                 <div class="twelve wide column">
                     <div class="ui segment">
                         <h1 class="ui header"><center>{{ school.school_name }}</center></h1>
-                        <center><img src="{% static 'catholichigh.jpg' %}"></img></center>
+                        <center><img src="{% static school.logo_name %}"></img></center>
                         <h2>
                             <center>Vision</center>
                         </h2>
@@ -107,30 +135,37 @@
                                 <p>Vice Principal: {{ school.fourth_vp_name }}</p>
                                 <p>Vice Principal: {{ school.fifth_vp_name }}</p>
                             </div>
-                            <!--<div class="sixteen wide column">
-                                <h2>Reviews/ Comments</h2>
-                                <div class="ui grid centered" style="margin-top:5%">
-                                    <div class="ui small statistic segment">
-                                        <div class="label">
-                                            Overall rating
-                                        </div>
-                                        <div class="value">
-                                            <div class="rating largetext">{{ school.get_overall_rating|floatformat:"1" }}</div>
-                                            <div class="ui star readonlyrating rating" data-rating="{{ school.get_overall_rating|floatformat:'0' }}" data-max-rating="5"></div>
+                            {% if school.schoolcomment_set.exists %}
+                                <div class="sixteen wide column">
+                                    <h2>Reviews/ Comments</h2>
+                                    <div class="ui grid centered" style="margin-top:5%">
+                                        <div class="ui small statistic segment">
+                                            <div class="label">
+                                                Overall rating
+                                            </div>
+                                            <div class="value">
+                                                <div class="rating largetext">{{ school.get_overall_rating|floatformat:"1" }}</div>
+                                                <div class="ui star readonlyrating rating" data-rating="{{ school.get_overall_rating|floatformat:'0' }}" data-max-rating="5"></div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                            {% endif %}
+                            <div class="eight wide column">
+                                <h3 class="header">PSLE</h3>
+                                <strong>Express: {{ school.express_nonaff_lower }} - {{ school.express_nonaff_upper }}<br>
+                                Normal Academic: {{ school.normal_academic_nonaff_lower }} - {{ school.normal_academic_nonaff_upper}}<br>
+                                Normal Technical: {{ school.normal_technical_nonaff_lower }} - {{ school.normal_technical_nonaff_upper }}</strong>
                             </div>
-                            <div class="four wide column"></div>
-                            <div class="four wide column"></div>
-                            <div class="four wide column"></div>
-                            <div class="four wide column"></div>
-                            <div class="four wide column"></div> -->
+                            <div class="eight wide column"></div>
+                            <div class="sixteen wide column">
+                                <div id="map" style="height: 300px"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="two wide column"></div>
-                
+
 		<!--<div class="two wide column"></div>
                 <div class="twelve wide column">
                     <center><div class="ui header">Comments</div></center>
@@ -180,7 +215,7 @@
                     </div>
                 </div>
                 <div class="two wide column"></div> -->
-            
+
             <div class="four wide column"></div> <!-- yongrui test-->
                 <div class="eight wide column">
                     <div class="ui segment">
@@ -243,12 +278,12 @@
                     </div>
                 </div>
                 <div class="four wide column"></div>
-				
-				
+
+
             </div>
         </div>
     </div>
-	
+
 	<script>
 		function writeReview(){
 			var x = document.getElementById("reviewBox");
