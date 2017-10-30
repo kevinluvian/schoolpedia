@@ -9,9 +9,14 @@ from django.urls import reverse
 
 def school_list(request):
     latitude, longitude, has_coordinate = utils.get_coordinate_from_request(request)
+    kwargs = {}
+
+    if request.GET:
+        if 'school_name' in request.GET:
+            kwargs['school_name__icontains'] = request.GET['school_name']
 
     # queryset and pagination
-    queryset = School.objects.all()
+    queryset = School.objects.filter(**kwargs)
     paginator = Paginator(queryset, 10)  # one page contains 10 items
     page = request.GET.get('page')
     try:
@@ -95,10 +100,6 @@ def compare_schools(request):
     return render(request, 'app/comparison/index.html', {
         'compared_school_list': compared_school_list
     })
-
-
-def faq(request):
-    pass
 
 
 def contact_us(request):

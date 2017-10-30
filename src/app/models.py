@@ -83,6 +83,14 @@ class Enquiry(models.Model):
     name = models.CharField(max_length=200)
     email = models.EmailField()
     message = models.TextField()
+    status = models.CharField(
+        max_length=1,
+        choices=(
+            ('P', 'Pending'),
+            ('A', 'Answered')
+        ),
+        default='P'
+    )
     created_at = models.DateTimeField(auto_now_add=True)
 
 

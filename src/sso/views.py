@@ -4,7 +4,6 @@ from sso.forms import UserCreationForm
 from sso.utils import send_email
 import random
 import string
-import pdb
 
 
 def register(request):

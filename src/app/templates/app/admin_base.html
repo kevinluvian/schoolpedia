@@ -1,118 +1,6 @@
 {% extends 'app/base.html' %}
 
-{% block script %}
-
-{% endblock %}
-
-{% block body %}
-<body>
-    <div class="ui inverted huge borderless fixed fluid menu">
-        <a class="header item">SchoolPedia</a>
-        <div class="right menu">
-            <div class="item">
-                <div class="ui small input">
-                    <input placeholder="Search..." />
-                </div>
-            </div>
-            <a class="item">Logout</a>
-        </div>
-    </div>
-    <div class="ui grid">
-        <div class="row">
-            <div class="column" id="sidebar">
-                <div class="ui secondary vertical fluid menu">
-                    <a class="item">Overview</a><a href="admin_users.html" class="item">Users</a><a href="admin_enquries.html" class="active item">Enquiries</a><a class="item">Schools</a>
-                    <a class="item">Reports</a>
-                </div>
-            </div>
-            <div class="column" id="content">
-                {% block content %}
-                    <div class="ui grid">
-                        <div class="row">
-                            <h1 class="ui huge header">Enquiry</h1>
-                        </div>
-                        <div class="ui divider"></div>
-                        <div class="row">
-                            <table class="ui single line striped sortable celled selectable icon table">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            #
-                                        </th>
-                                        <th>
-                                            Email
-                                        </th>
-                                        <th>
-                                            Name
-                                        </th>
-                                        <th>
-                                            Enquiry
-                                        </th>
-                                        <th class="sorted descending">
-                                            Status
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="warning" >
-                                       <td>
-                                            1
-                                        </td>
-                                        <td>
-                                            albert93@gmail.com
-                                        </td>
-                                        <td>
-                                            Albert
-                                        </td>
-                                        <td>
-                                            I have a question about secondary school enrolment.
-                                        </td>
-                                        <td class="selectable">
-                                            <a href="admin_enquries_detail.html">Unread</a>
-                                        </td>
-                                    </tr>
-                                    <tr class="positive">
-                                        <td>
-                                            2
-                                        </td>
-                                        <td>
-                                            ben93@gmail.com
-                                        </td>
-                                        <td>
-                                            Ben
-                                        </td>
-                                        <td>
-                                            I have a question about secondary school enrolment.
-                                        </td>
-                                        <td class="selectable">
-                                            <a href="">Read</a>
-                                        </td>
-                                    </tr>
-                                    <tr class="positive">
-                                        <td>
-                                            3
-                                        </td>
-                                        <td>
-                                            ken93@gmail.com
-                                        </td>
-                                        <td>
-                                            Ken
-                                        </td>
-                                        <td>
-                                            I have a question about secondary school enrolment.
-                                        </td>
-                                        <td class="selectable">
-                                            <a href="">Read</a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                {% endblock %}
-        </div>
-    </div>
+{% block style %}
     <style type="text/css">
         body {
             display:relative;
@@ -120,7 +8,7 @@
 
         #sidebar {
             position: fixed;
-            top: 51.8px;
+            top: 45.7px;
             left: 0;
             bottom: 0;
             width: 18%;
@@ -178,5 +66,32 @@
                     border-bottom: 2px solid #eee !important;
                 }
     </style>
+{% endblock %}
+
+{% block body %}
+<body>
+    <div class="ui inverted huge borderless fixed fluid menu">
+        <a class="header item" href="{% url 'app:admin' %}">SchoolPedia</a>
+        <div class="right menu">
+            <a class="item">Logout</a>
+        </div>
+    </div>
+    <div class="ui grid">
+        <div class="row">
+            <div class="column" id="sidebar">
+                <div class="ui secondary vertical fluid menu">
+                    <a href="{% url 'app:admin_users' %}" class="{% if active == 'user' %}active {% endif %}item">Users</a>
+                    <a href="{% url 'app:admin_enquiries' %}" class="{% if active == 'enquiry' %}active {% endif %}item">Enquiries</a>
+                    <a href="{% url 'app:admin_schools' %}" class="{% if active == 'school' %}active {% endif %}item">Schools</a>
+                    <a href="{% url 'app:admin_reports' %}" class="{% if active == 'report' %}active {% endif %}item">Reports</a>
+                </div>
+            </div>
+            <div class="column" id="content">
+                {% block content %}
+                    Welcome to admin page
+                {% endblock %}
+            </div>
+        </div>
+    </div>
 </body>
 {% endblock %}

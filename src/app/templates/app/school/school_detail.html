@@ -132,8 +132,11 @@
                                     <div class="ui comments">
                                         <div class="comment">
                                             <div class="content">
-                                                <a class="author">{{ comment.created_by }}</a>
+                                                <div class="author">
+                                                    {{ comment.created_by }}
+                                                </div>
                                                 <div class="text">{{ comment.message }}</div>
+                                                <a href="{% url 'app:report_comment' comment.id %}" class="ui button">Report</a>
                                             </div>
                                         </div>
                                     </div>
