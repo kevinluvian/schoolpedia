@@ -23,7 +23,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'ed56n2#!ek@h7nm(t8gz2x^noy+wpcc^szrbt_rf%7)r++^@=o'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+env = os.getenv('PROD', False)
+if env == 'True':
+    DEBUG = False
+else:
+    DEBUG = True
 
 ALLOWED_HOSTS = [
     'schoolpedia.herokuapp.com',
@@ -147,3 +151,5 @@ EMAIL_HOST_USER = 'schoolpediacz2006@gmail.com'
 EMAIL_HOST_PASSWORD = 'cz2006ntu'
 EMAIL_PORT = 465
 EMAIL_USE_SSL = True
+
+SECURE_SSL_REDIRECT = True
