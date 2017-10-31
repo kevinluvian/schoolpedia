@@ -119,22 +119,35 @@
                         </h4>
                         <div class="ui hidden divider"></div>
                         <div class="ui center aligned grid">
-                            <div class="eight wide column">
-                                <h3 class="header">Location</h3>
-                                <p>{{ school.address }}</p>
-                                <p>{{ school.postal_code }}</p>
-                                <p>Nearest MRT: {{ school.mrt_desc }}</p>
-                                <p>Bus services: {{ school.bus_desc }}</p>
+                            <div class="five wide column">
+								<div class="ui raised segment">
+									<h3 class="header">Location</h3>
+									<p>{{ school.address }}</p>
+									<p>{{ school.postal_code }}</p>
+									<p>Nearest MRT: {{ school.mrt_desc }}</p>
+									<p>Bus services: {{ school.bus_desc }}</p>
+								</div>
                             </div>
-                            <div class="eight wide column">
-                                <h3 class="header">In Charge</h3>
-                                <p>Principal: {{ school.principal_name }}</p>
-                                <p>Vice Principal: {{ school.first_vp_name }}</p>
-                                <p>Vice Principal: {{ school.second_vp_name }}</p>
-                                <p>Vice Principal: {{ school.third_vp_name }}</p>
-                                <p>Vice Principal: {{ school.fourth_vp_name }}</p>
-                                <p>Vice Principal: {{ school.fifth_vp_name }}</p>
+                            <div class="five wide column">
+								<div class="ui raised segment">
+									<h3 class="header">In Charge</h3>
+									<p>Principal: {{ school.principal_name }}</p>
+									<p>Vice Principal: {{ school.first_vp_name }}</p>
+									<p>Vice Principal: {{ school.second_vp_name }}</p>
+									<p>Vice Principal: {{ school.third_vp_name }}</p>
+									<p>Vice Principal: {{ school.fourth_vp_name }}</p>
+									<p>Vice Principal: {{ school.fifth_vp_name }}</p>
+								</div>
                             </div>
+							 <div class="five wide column">
+								<div class="ui raised segment">
+									<h3 class="header">Cut-Off Point</h3>
+									<p>Express: {{ school.express_nonaff_lower }} - {{ school.express_nonaff_upper }}</p>
+									<p>Normal Academic: {{ school.normal_academic_nonaff_lower }} - {{ school.normal_academic_nonaff_upper}}</p>
+									<p>Normal Technical: {{ school.normal_technical_nonaff_lower }} - {{ school.normal_technical_nonaff_upper }}</p>
+								</div>
+                            </div>
+                            <!--<div class="eight wide column"></div>-->
                             {% if school.schoolcomment_set.exists %}
                                 <div class="sixteen wide column">
                                     <h2>Reviews/ Comments</h2>
@@ -151,13 +164,7 @@
                                     </div>
                                 </div>
                             {% endif %}
-                            <div class="eight wide column">
-                                <h3 class="header">PSLE</h3>
-                                <strong>Express: {{ school.express_nonaff_lower }} - {{ school.express_nonaff_upper }}<br>
-                                Normal Academic: {{ school.normal_academic_nonaff_lower }} - {{ school.normal_academic_nonaff_upper}}<br>
-                                Normal Technical: {{ school.normal_technical_nonaff_lower }} - {{ school.normal_technical_nonaff_upper }}</strong>
-                            </div>
-                            <div class="eight wide column"></div>
+                           
                             <div class="sixteen wide column">
                                 <div id="map" style="height: 300px"></div>
                             </div>
@@ -219,7 +226,10 @@
             <div class="four wide column"></div> <!-- yongrui test-->
                 <div class="eight wide column">
                     <div class="ui segment">
-                                <div class="ui grid centered" style="margin-top:2%;margin-bottom:2%">
+                                
+						
+						{% if school.schoolcomment_set.exists %}
+						<div class="ui grid centered" style="margin-top:2%;margin-bottom:2%">
                                     <div class="ui small statistic segment">
                                         <div class="label">
                                             Overall rating
@@ -229,7 +239,7 @@
                                             <div class="ui star readonlyrating rating" data-rating="{{ school.get_overall_rating|floatformat:'0' }}" data-max-rating="5"></div>
                                         </div>
                                     </div>
-                                </div>
+                         </div>
 						<center><div class="ui header">Reviews</div></center>
 						<div class="ui one columns grid" style="margin-top:2%">
 							{% for comment in school.schoolcomment_set.all %}
@@ -250,9 +260,12 @@
 								</div>
 							{% endfor %}
 						</div>
+						{% else %}
+							<div class="ui header">No Reviews Yet</div>
+						{% endif %}	
                         <center>
                             <div class="ui header">
-                                 <center>
+                        <center>
 					 {% if user.is_authenticated %}
 						<button style="margin-top:2%" class="ui primary button" id="reviewBtn" onclick="writeReview()">Write a Review</button>
 					 {% else %}
