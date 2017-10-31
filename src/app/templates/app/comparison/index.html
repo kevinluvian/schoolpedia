@@ -69,7 +69,14 @@
                     <thead>
                         <tr>
                             <th></th>
-                            {% if compared_school_list|length >= 1 %}
+                            {% for school in compared_school_list %}
+                                <th>
+                                    <a href="{% url 'app:school_detail' school.id %}">
+                                                <img src="{% static school.logo_name %}" />
+                                    </a>
+                                </th>
+                            {% endfor %}
+                          <!--  {% if compared_school_list|length >= 1 %}
                                 <th>
                                     <img src="{% static '/catholicHigh.jpg' %}" style="display:block; width:120px; height:auto;"/>
                                 </th>
@@ -82,7 +89,7 @@
                             {% endif %}
                             {% if compared_school_list|length >= 4 %}
                                 <th><img src="{% static '/catholicHigh.jpg' %}" style="display:block; width:120px; height:auto;"/></th>
-                            {% endif %}
+                            {% endif %} -->
                         </tr>
                     </thead>
                     <tbody>
