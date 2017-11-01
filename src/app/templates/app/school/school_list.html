@@ -163,7 +163,7 @@
             } else {
                 searchParams.delete('tamilMT');
             }
-
+            /*
             if (!stExp.checked) {
                 searchParams.set('stExp', 'false')
             } else {
@@ -180,7 +180,7 @@
                 searchParams.set('stmNT', 'false')
             } else {
                 searchParams.delete('stmNT');
-            }
+            }*/
 
             searchParams.delete('page');
             window.location.search = searchParams.toString()
@@ -314,7 +314,7 @@
                                     <label>Tamil</label>
                                 </div>
 
-                                <h4>Streams</h4>
+                                <!--<h4>Streams</h4>
                                 <div class="ui checked checkbox">
                                     <input type="checkbox" id="stmExp" {% if not params.stmExp %}checked{% endif %}>
                                     <label>Express</label>
@@ -328,7 +328,7 @@
                                 <div class="ui checked checkbox">
                                     <input type="checkbox" id="stmNT" {% if not params.stmNT %}checked{% endif %}>
                                     <label>Normal Technical</label>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -340,7 +340,7 @@
                     {% endcomment %}
 
                     <span id='curentLocationAddress'></span>
-					
+
 					  {% if params.sortAsc %}
                         <button class="ui button" onclick="sortAsc()"><i class="sort alphabet ascending icon"></i></button>
 						<a onclick="sortAsc()"><i class="sort alphabet ascending icon"></i></a>
@@ -359,7 +359,7 @@
                             </a>
                         {% endfor %}
                     </div>
-                  
+
                 </div>
                 <div class="two wide column"></div>
             </div>

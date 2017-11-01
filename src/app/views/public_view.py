@@ -30,20 +30,10 @@ class PublicView():
                         normal_academic_nonaff_lower__isnull=False
                     )
                     # ada diantara
-                    predicates = []
-                    if 'stmExp' in request.GET:
-                        predicates.append((Q(express_nonaff_lower__lte=score) & Q(express_nonaff_upper__gte=score)))
-                    if 'stmNA' in request.GET:
-                        predicates.append((Q(normal_academic_nonaff_upper__gte=score) & Q(normal_academic_nonaff_lower__lte=score)))
-                    if 'stmNT' in request.GET:
-                        predicates.append((Q(normal_technical_nonaff_upper__gte=score) & Q(normal_technical_nonaff_lower__lte=score)))
-                    q_list = [Q(x) for x in predicates]
-
-                    queryset = queryset.filter(reduce(operator.or_,q_list)
-                    #    (Q(express_nonaff_lower__lte=score) & Q(express_nonaff_upper__gte=score)) |
-                    #    (Q(normal_technical_nonaff_upper__gte=score) & Q(normal_technical_nonaff_lower__lte=score)) |
-                    #    (Q(normal_academic_nonaff_upper__gte=score) & Q(normal_academic_nonaff_lower__lte=score))
-
+                    queryset = queryset.filter(
+                       (Q(express_nonaff_lower__lte=score) & Q(express_nonaff_upper__gte=score)) |
+                        (Q(normal_technical_nonaff_upper__gte=score) & Q(normal_technical_nonaff_lower__lte=score)) |
+                        (Q(normal_academic_nonaff_upper__gte=score) & Q(normal_academic_nonaff_lower__lte=score))
                     )
                 except ValueError:
                     pass
