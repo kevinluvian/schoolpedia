@@ -18,7 +18,9 @@
                             <div class="three wide column">
                                 <div class="ui image">
                                     <a href="{% url 'app:school_detail' bookmark.school.id %}">
-                                        <img src="{% static school.logo_name %}" />
+                                        {% if school.logo_name %}
+                                            <img src="{% static school.logo_name %}" />
+                                        {% endif %}
                                     </a>
                                 </div>
                             </div>
