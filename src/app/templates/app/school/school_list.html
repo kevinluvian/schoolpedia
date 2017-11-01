@@ -36,6 +36,34 @@
         </script>
     {% endif %}
     <script>
+        function sortAsc () {
+            var searchParams = new URLSearchParams(window.location.search);
+            searchParams.delete('sortAsc');
+            searchParams.delete('page');
+            window.location.search = searchParams.toString();
+        }
+        function sortDesc () {
+            var searchParams = new URLSearchParams(window.location.search);
+            searchParams.set('sortAsc', 'flip');
+            searchParams.delete('page');
+            window.location.search = searchParams.toString();
+        }
+        function geocodeLatLng(geocoder, map, infowindow) {
+            var latStr = '{{ latitude }}';
+            var lngStr = '{{ longitude }}';
+            var latlng = {
+                lat: parseFloat(latStr),
+                lng: parseFloat(lngStr)
+            };
+            geocoder.geocode({'location': latlng}, function(results, status) {
+                if (status === 'OK') {
+                    if (results[0]) {
+                        span = document.getElementById('curentLocationAddress')
+                        span.innerHTML = results[0].formatted_address
+                    }
+                }
+            });
+        }
         function submitSearch () {
             var searchParams = new URLSearchParams(window.location.search);
             score = document.getElementById('scoreSchool')
@@ -58,6 +86,7 @@
             var zoneWest = document.getElementById('zoneWest')
             var spIP = document.getElementById('spIP')
             var spSAP = document.getElementById('spSAP')
+            var spNone = document.getElementById('spNone')
             var chineseMT = document.getElementById('chineseMT')
             var malayMT = document.getElementById('malayMT')
             var tamilMT = document.getElementById('tamilMT')
@@ -96,6 +125,12 @@
                 searchParams.set('spSAP', 'false')
             } else {
                 searchParams.delete('spSAP');
+            }
+
+            if (!spNone.checked) {
+                searchParams.set('spNone', 'false')
+            } else {
+                searchParams.delete('spNone');
             }
 
             if (!chineseMT.checked) {
@@ -191,6 +226,10 @@
                                     <input type="checkbox" id="spSAP" {% if not params.spSAP %}checked{% endif %}>
                                     <label>SAP</label>
                                 </div>
+                                <div class="ui checked checkbox">
+                                    <input type="checkbox" id="spNone" {% if not params.spNone %}checked{% endif %}>
+                                    <label>None</label>
+                                </div>
 
                                 <h4>Mother Tongue</h4>
                                 <div class="ui checked checkbox">
@@ -214,6 +253,23 @@
                             location: {{ latitude }}, {{ longitude}}
                         {% endif %}
                     {% endcomment %}
+                    {% if params.sortAsc %}
+                        <button onclick="sortAsc()">Sort Ascending</button>
+                    {% else %}
+                        <button onclick="sortDesc()">Sort Descending</button>
+                    {% endif %}
+                    <span id='curentLocationAddress'></span>
+                </div>
+                <div class="two wide column"></div>
+                <div class="two wide column"></div>
+                <div class="twelve wide column">
+                    <div class="ui pagination menu">
+                        {% for item in school_alphabet %}
+                            <a class="{% if item.disabled %}disabled {% endif %}item" href="?alphabet={{item.alphabet}}{{ params_text_with_page }}">
+                                {{ item.alphabet }}
+                            </a>
+                        {% endfor %}
+                    </div>
                 </div>
                 <div class="two wide column"></div>
             </div>
