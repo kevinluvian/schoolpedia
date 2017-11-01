@@ -19,7 +19,7 @@
                                 <div class="ui image">
                                     <a href="{% url 'app:school_detail' bookmark.school.id %}">
                                         {% if bookmark.school.logo_name %}
-                                            <img src="{% static school.logo_name %}" />
+                                            <img src="{% static bookmark.school.logo_name %}" />
                                         {% endif %}
                                     </a>
                                 </div>
