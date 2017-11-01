@@ -197,9 +197,6 @@
                     }
                 })
             $('.dropdown').dropdown();
-            {% if params.distance %}
-            $('.ui.dropdown').has('#distanceSchool').dropdown('set selected', {{params.distance}});
-            {% endif %}
         })
     </script>
 {% endblock %}
@@ -223,7 +220,7 @@
                         <input type="text" id="scoreSchool" name="score" placeholder="Enter PSLE score" value="{{ params.score }}">
                     </div>
                     <div id="distanceSchool" class="ui selection dropdown">
-                      <input type="hidden" name="distance" value ={{params.distance}}>
+                      <input type="hidden" name="distance">
                       <i class="dropdown icon"></i>
                       <div class="default text">Enter distance in KM</div>
                       <div class="menu">
