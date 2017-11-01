@@ -28,6 +28,7 @@
                 searchParams.set('longitude', longitude.toString())
                 window.location.search = searchParams.toString()
             }
+
             function error(err) {
                 console.warn(`ERROR(${err.code}): ${err.message}`);
                 setTimeout(run, 1000);
@@ -61,14 +62,15 @@
                 lng: parseFloat(lngStr)
             };
             if (latlng.lat && latlng.lng) {
+                var geocoder = new google.maps.Geocoder();
                 geocoder.geocode({'location': latlng}, function(results, status) {
                     if (status === 'OK') {
                         if (results[0]) {
                             span = document.getElementById('curentLocationAddress')
-                            span.innerHTML = results[0].formatted_address
+                            span.innerHTML = "Current location: " + results[0].formatted_address
                         }
                     }
-                });    
+                });
             }
         }
         function submitSearch () {
