@@ -35,6 +35,11 @@
             run()
         </script>
     {% endif %}
+    <script
+        async
+        defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUH4ybclQQPb9WiYYoY1gMLNyq3WaUQ1E&callback=initMap">
+    </script>
     <script>
         function sortAsc () {
             var searchParams = new URLSearchParams(window.location.search);
@@ -48,21 +53,23 @@
             searchParams.delete('page');
             window.location.search = searchParams.toString();
         }
-        function geocodeLatLng(geocoder, map, infowindow) {
+        function initMap() {
             var latStr = '{{ latitude }}';
             var lngStr = '{{ longitude }}';
             var latlng = {
                 lat: parseFloat(latStr),
                 lng: parseFloat(lngStr)
             };
-            geocoder.geocode({'location': latlng}, function(results, status) {
-                if (status === 'OK') {
-                    if (results[0]) {
-                        span = document.getElementById('curentLocationAddress')
-                        span.innerHTML = results[0].formatted_address
+            if (latlng.lat && latlng.lng) {
+                geocoder.geocode({'location': latlng}, function(results, status) {
+                    if (status === 'OK') {
+                        if (results[0]) {
+                            span = document.getElementById('curentLocationAddress')
+                            span.innerHTML = results[0].formatted_address
+                        }
                     }
-                }
-            });
+                });    
+            }
         }
         function submitSearch () {
             var searchParams = new URLSearchParams(window.location.search);
@@ -254,9 +261,9 @@
                         {% endif %}
                     {% endcomment %}
                     {% if params.sortAsc %}
-                        <button onclick="sortAsc()">Sort Ascending</button>
+                        <button class="ui button" onclick="sortAsc()">Sort Ascending</button>
                     {% else %}
-                        <button onclick="sortDesc()">Sort Descending</button>
+                        <button class="ui button" onclick="sortDesc()">Sort Descending</button>
                     {% endif %}
                     <span id='curentLocationAddress'></span>
                 </div>
