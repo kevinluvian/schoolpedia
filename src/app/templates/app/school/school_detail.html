@@ -129,11 +129,21 @@
 									<h3 class="header">In Charge</h3>
 									<p><i class="users icon" style="font-size:20px"></i></p>
 									<p>Principal: {{ school.principal_name }}</p>
+                  {% if school.first_vp_name != "na" %}
 									<p>Vice Principal: {{ school.first_vp_name }}</p>
+                  {% endif %}
+                  {% if school.second_vp_name != "na" %}
 									<p>Vice Principal: {{ school.second_vp_name }}</p>
+                  {% endif %}
+                  {% if school.third_vp_name != "na" %}
 									<p>Vice Principal: {{ school.third_vp_name }}</p>
+                  {% endif %}
+                  {% if school.fourth_vp_name != "na" %}
 									<p>Vice Principal: {{ school.fourth_vp_name }}</p>
+                  {% endif %}
+                  {% if school.fifth_vp_name != "na" %}
 									<p>Vice Principal: {{ school.fifth_vp_name }}</p>
+                  {% endif %}
 								</div>
                             </div>
 							 <div class="five wide column">
