@@ -100,6 +100,9 @@
             var chineseMT = document.getElementById('chineseMT')
             var malayMT = document.getElementById('malayMT')
             var tamilMT = document.getElementById('tamilMT')
+            var stmExp = document.getElementById('stmExp')
+            var stmNA = document.getElementById('stmNA')
+            var stmNT = document.getElementById('stmNT')
 
             if (!zoneNorth.checked) {
                 searchParams.set('zoneNorth', 'false')
@@ -159,6 +162,24 @@
                 searchParams.set('tamilMT', 'false')
             } else {
                 searchParams.delete('tamilMT');
+            }
+
+            if (!stExp.checked) {
+                searchParams.set('stExp', 'false')
+            } else {
+                searchParams.delete('stExp');
+            }
+
+            if (!stmNA.checked) {
+                searchParams.set('stmNA', 'false')
+            } else {
+                searchParams.delete('stmNA');
+            }
+
+            if (!stmNT.checked) {
+                searchParams.set('stmNT', 'false')
+            } else {
+                searchParams.delete('stmNT');
             }
 
             searchParams.delete('page');
@@ -291,6 +312,22 @@
                                 <div class="ui checked checkbox">
                                     <input type="checkbox" id="tamilMT" {% if not params.tamilMT %}checked{% endif %}>
                                     <label>Tamil</label>
+                                </div>
+
+                                <h4>Streams</h4>
+                                <div class="ui checked checkbox">
+                                    <input type="checkbox" id="stmExp" {% if not params.stmExp %}checked{% endif %}>
+                                    <label>Express</label>
+                                </div>
+                                <br>
+                                <div class="ui checked checkbox">
+                                    <input type="checkbox" id="stmNA" {% if not params.stmNA %}checked{% endif %}>
+                                    <label>Normal Academic</label>
+                                </div>
+                                <br>
+                                <div class="ui checked checkbox">
+                                    <input type="checkbox" id="stmNT" {% if not params.stmNT %}checked{% endif %}>
+                                    <label>Normal Technical</label>
                                 </div>
                             </div>
                         </div>
