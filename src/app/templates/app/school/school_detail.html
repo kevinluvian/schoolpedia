@@ -120,8 +120,9 @@
                         <div class="ui hidden divider"></div>
                         <div class="ui center aligned grid">
                             <div class="five wide column">
-								<div class="ui raised segment">
+								<div class="ui raised segment icon">
 									<h3 class="header">Location</h3>
+									<p><i class="marker icon" style="font-size:20px"></i></p>
 									<p>{{ school.address }}</p>
 									<p>{{ school.postal_code }}</p>
 									<p>Nearest MRT: {{ school.mrt_desc }}</p>
@@ -131,6 +132,7 @@
                             <div class="five wide column">
 								<div class="ui raised segment">
 									<h3 class="header">In Charge</h3>
+									<p><i class="users icon" style="font-size:20px"></i></p>
 									<p>Principal: {{ school.principal_name }}</p>
 									<p>Vice Principal: {{ school.first_vp_name }}</p>
 									<p>Vice Principal: {{ school.second_vp_name }}</p>
@@ -142,6 +144,7 @@
 							 <div class="five wide column">
 								<div class="ui raised segment">
 									<h3 class="header">Cut-Off Point</h3>
+									<p><i class="student icon" style="font-size:20px"></i></p>									
 									<p>Express: {{ school.express_nonaff_lower }} - {{ school.express_nonaff_upper }}</p>
 									<p>Normal Academic: {{ school.normal_academic_nonaff_lower }} - {{ school.normal_academic_nonaff_upper}}</p>
 									<p>Normal Technical: {{ school.normal_technical_nonaff_lower }} - {{ school.normal_technical_nonaff_upper }}</p>
