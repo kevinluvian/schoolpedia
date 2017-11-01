@@ -67,7 +67,7 @@
                     if (status === 'OK') {
                         if (results[0]) {
                             span = document.getElementById('curentLocationAddress')
-                            span.innerHTML = "Current location: " + results[0].formatted_address
+                            span.innerHTML = "Your location: " + results[0].formatted_address
                         }
                     }
                 });
@@ -176,6 +176,9 @@
                     }
                 })
             $('.dropdown').dropdown();
+            {% if params.distance %}
+            $('.ui.dropdown').has('#distanceSchool').dropdown('set selected', {{params.distance}});
+            {% endif %}
         })
     </script>
 {% endblock %}
@@ -199,7 +202,7 @@
                         <input type="text" id="scoreSchool" name="score" placeholder="Enter PSLE score" value="{{ params.score }}">
                     </div>
                     <div id="distanceSchool" class="ui selection dropdown">
-                      <input type="hidden" name="distance">
+                      <input type="hidden" name="distance" value ={{params.distance}}>
                       <i class="dropdown icon"></i>
                       <div class="default text">Enter distance in KM</div>
                       <div class="menu">
@@ -298,11 +301,7 @@
                             location: {{ latitude }}, {{ longitude}}
                         {% endif %}
                     {% endcomment %}
-                    {% if params.sortAsc %}
-                        <button class="ui button" onclick="sortAsc()">Sort Ascending</button>
-                    {% else %}
-                        <button class="ui button" onclick="sortDesc()">Sort Descending</button>
-                    {% endif %}
+
                     <span id='curentLocationAddress'></span>
                 </div>
                 <div class="two wide column"></div>
@@ -315,6 +314,11 @@
                             </a>
                         {% endfor %}
                     </div>
+                    {% if params.sortAsc %}
+                        <button class="ui button" onclick="sortAsc()">Sort Ascending</button>
+                    {% else %}
+                        <button class="ui button" onclick="sortDesc()">Sort Descending</button>
+                    {% endif %}
                 </div>
                 <div class="two wide column"></div>
             </div>
