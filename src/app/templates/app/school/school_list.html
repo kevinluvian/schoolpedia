@@ -340,22 +340,26 @@
                     {% endcomment %}
 
                     <span id='curentLocationAddress'></span>
+					
+					  {% if params.sortAsc %}
+                        <button class="ui button" onclick="sortAsc()"><i class="sort alphabet ascending icon"></i></button>
+						<a onclick="sortAsc()"><i class="sort alphabet ascending icon"></i></a>
+                    {% else %}
+                        <button class="ui button" onclick="sortDesc()"><i class="sort alphabet descending icon"></i></button>
+						<a onclick="sortDesc()"><i class="sort alphabet descending icon"></i></a>
+                    {% endif %}
                 </div>
                 <div class="two wide column"></div>
                 <div class="two wide column"></div>
-                <div class="twelve wide column">
-                    <div class="ui pagination menu">
+                <div class="twelve wide column icon center aligned">
+                    <div class="ui pagination menu small" style="width:100%">
                         {% for item in school_alphabet %}
                             <a class="{% if item.disabled %}disabled {% endif %}item" href="?alphabet={{item.alphabet}}{{ params_text_with_page }}">
                                 {{ item.alphabet }}
                             </a>
                         {% endfor %}
                     </div>
-                    {% if params.sortAsc %}
-                        <button class="ui button" onclick="sortAsc()">Sort Ascending</button>
-                    {% else %}
-                        <button class="ui button" onclick="sortDesc()">Sort Descending</button>
-                    {% endif %}
+                  
                 </div>
                 <div class="two wide column"></div>
             </div>
