@@ -33,11 +33,6 @@
                 setTimeout(run, 1000);
             }
             run()
-
-             // $(document).ready(function () {
-            // All your normal JS code goes in here
-          //  $(".rating").rating();
-        });
         </script>
     {% endif %}
     <script
@@ -144,7 +139,7 @@
 							 <div class="five wide column">
 								<div class="ui raised segment">
 									<h3 class="header">Cut-Off Point</h3>
-									<p><i class="student icon" style="font-size:20px"></i></p>									
+									<p><i class="student icon" style="font-size:20px"></i></p>
 									<p>Express: {{ school.express_nonaff_lower }} - {{ school.express_nonaff_upper }}</p>
 									<p>Normal Academic: {{ school.normal_academic_nonaff_lower }} - {{ school.normal_academic_nonaff_upper}}</p>
 									<p>Normal Technical: {{ school.normal_technical_nonaff_lower }} - {{ school.normal_technical_nonaff_upper }}</p>
@@ -167,7 +162,7 @@
                                     </div>
                                 </div>
                             {% endif %}
-                           
+
                             <div class="sixteen wide column">
                                 <div id="map" style="height: 300px"></div>
                             </div>
@@ -176,13 +171,13 @@
                 </div>
                 <div class="two wide column"></div>
 
-		
+
 
             <div class="four wide column"></div> <!-- yongrui test-->
                 <div class="eight wide column">
                     <div class="ui segment">
-                                
-						
+
+
 						{% if school.schoolcomment_set.exists %}
 						<div class="ui grid centered" style="margin-top:2%;margin-bottom:2%">
                                     <div class="ui small statistic segment">
@@ -217,7 +212,7 @@
 						</div>
 						{% else %}
 							<div class="ui header">No Reviews Yet</div>
-						{% endif %}	
+						{% endif %}
                         <center>
                             <div class="ui header">
                         <center>
