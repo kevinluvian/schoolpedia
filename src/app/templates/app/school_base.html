@@ -31,7 +31,7 @@
                     <form method='GET' action='/schools/'>
                         <div class="ui action left icon input">
                             <i class="search icon"></i>
-                            <input name='school_name' type="text" placeholder="Enter school">
+                            <input name='school_name' type="text" placeholder="Enter school" {% if params.school_name %} value={{params.school_name}} {% endif %} />
                             <button class="ui button">Search</button>
                         </div>
                     </form>
