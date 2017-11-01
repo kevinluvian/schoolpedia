@@ -33,7 +33,7 @@ if env == 'True':
     DEBUG = False
 else:
     DEBUG = True
-
+print(DEBUG)
 ALLOWED_HOSTS = [
     'schoolpedia.herokuapp.com',
     'localhost',
@@ -53,11 +53,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'app',
     'sso',
-    'semanticui'
+    'semanticui',
+    'raven.contrib.django.raven_compat',
 ]
 
 MIDDLEWARE = [
-    'raven.contrib.django.raven_compat',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
