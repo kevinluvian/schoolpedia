@@ -129,6 +129,7 @@ class PublicView():
             'longitude': longitude,
             'params_text': params_text,
             'params_text_with_page': params_text_with_page,
+            'school_alphabet': school_alphabet,
             'params': request.GET
         })
 
