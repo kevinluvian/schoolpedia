@@ -54,7 +54,7 @@
             };
 
             var map = new google.maps.Map(document.getElementById('map'), {
-              zoom: 13,
+              zoom: 14,
               center: center
             });
 
@@ -145,23 +145,6 @@
 									<p>Normal Technical: {{ school.normal_technical_nonaff_lower }} - {{ school.normal_technical_nonaff_upper }}</p>
 								</div>
                             </div>
-                            <!--<div class="eight wide column"></div>-->
-                            {% if school.schoolcomment_set.exists %}
-                                <div class="sixteen wide column">
-                                    <h2>Reviews/ Comments</h2>
-                                    <div class="ui grid centered" style="margin-top:5%">
-                                        <div class="ui small statistic segment">
-                                            <div class="label">
-                                                Overall rating
-                                            </div>
-                                            <div class="value">
-                                                <div class="rating largetext">{{ school.get_overall_rating|floatformat:"1" }}</div>
-                                                <div class="ui star readonlyrating rating" data-rating="{{ school.get_overall_rating|floatformat:'0' }}" data-max-rating="5"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endif %}
 
                             <div class="sixteen wide column">
                                 <div id="map" style="height: 300px"></div>
@@ -229,6 +212,7 @@
                             {% csrf_token %}
                             <input type="hidden" name="rating" value="3" required="" id="id_rating">
                             <div class="ui field">
+                              <div>Give this school a rating: </div>
                                 <center>
                                     <div class="ui star writerating rating" data-rating="3" data-max-rating="5"></div>
                                 </center>
