@@ -144,17 +144,15 @@
 									<p>Normal Academic: {{ school.normal_academic_nonaff_lower }} - {{ school.normal_academic_nonaff_upper}}</p>
 									<p>Normal Technical: {{ school.normal_technical_nonaff_lower }} - {{ school.normal_technical_nonaff_upper }}</p>
 								</div>
-                            </div>
+              </div>
 
-                            <div class="sixteen wide column">
-                                <div id="map" style="height: 300px"></div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="sixteen wide column">
+                    <div id="map" style="height: 300px"></div>
                 </div>
-                <div class="two wide column"></div>
-
-
+              </div>
+            </div>
+          </div>
+          <div class="two wide column"></div>
 
             <div class="four wide column"></div> <!-- yongrui test-->
                 <div class="eight wide column">
@@ -212,9 +210,9 @@
                             {% csrf_token %}
                             <input type="hidden" name="rating" value="3" required="" id="id_rating">
                             <div class="ui field">
-                              <div>Give this school a rating: </div>
                                 <center>
-                                    <div class="ui star writerating rating" data-rating="3" data-max-rating="5"></div>
+                                  <div>Give this school a rating: </div>
+                                  <div class="ui star writerating rating" data-rating="3" data-max-rating="5"></div>
                                 </center>
                             </div>
                             <div class="ui field">
