@@ -382,17 +382,26 @@
                                             </div>
                                         {% endif %}
                                         <div>
-                                            <p>{{ school.address }}
-                                            </br>
-                                            {{ school.postal_code }}</p>
-                                            <center>
-                                              <div>
-                              									<p>Express: {{ school.express_nonaff_lower }} - {{ school.express_nonaff_upper }}</p>
-                              									<p>Normal Academic: {{ school.normal_academic_nonaff_lower }} - {{ school.normal_academic_nonaff_upper}}</p>
-                              									<p>Normal Technical: {{ school.normal_technical_nonaff_lower }} - {{ school.normal_technical_nonaff_upper }}</p>
-                                              </div>
-                                            </centre>
-                                        </div>
+                                          <table class="ui celled table">
+                                              <tbody>
+                                                  <tr>
+                                                    <td>
+                                                      <span>{{ school.address }}</span>
+                                                      <span>{{ school.postal_code }}</span>
+                                                  </td>
+                                                    <td>
+                                                      <center>
+                                                        <div>
+                                        									<p>Express: {{ school.express_nonaff_lower }} - {{ school.express_nonaff_upper }}</p>
+                                        									<p>Normal Academic: {{ school.normal_academic_nonaff_lower }} - {{ school.normal_academic_nonaff_upper}}</p>
+                                        									<p>Normal Technical: {{ school.normal_technical_nonaff_lower }} - {{ school.normal_technical_nonaff_upper }}</p>
+                                                        </div>
+                                                      </centre>
+                                                    </td>
+                                                  </tr>
+                                                </tbody>
+                                              </table>
+                                          </div>
                                         <div>
                                             {% if school|is_compared:request == True %}
                                                 <a class="ui red label" href="{% url 'app:remove_from_comparison' school.id %}">
