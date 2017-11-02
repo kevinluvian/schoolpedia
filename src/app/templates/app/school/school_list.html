@@ -382,8 +382,16 @@
                                             </div>
                                         {% endif %}
                                         <div>
-                                            <p>{{ school.address }}</p>
-                                            <p>{{ school.postal_code }}</p>
+                                            <p>{{ school.address }}
+                                            </br>
+                                            {{ school.postal_code }}</p>
+                                            <center>
+                                              <div>
+                              									<p>Express: {{ school.express_nonaff_lower }} - {{ school.express_nonaff_upper }}</p>
+                              									<p>Normal Academic: {{ school.normal_academic_nonaff_lower }} - {{ school.normal_academic_nonaff_upper}}</p>
+                              									<p>Normal Technical: {{ school.normal_technical_nonaff_lower }} - {{ school.normal_technical_nonaff_upper }}</p>
+                                              </div>
+                                            </centre>
                                         </div>
                                         <div>
                                             {% if school|is_compared:request == True %}
