@@ -5,6 +5,7 @@ from app.forms import SchoolForm, EnquiryAnswerForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.decorators import user_passes_test
+from sso.utils import send_email
 
 
 class AdminView():
@@ -82,6 +83,19 @@ class AdminView():
                 new_answer.save()
                 enquiry.status = 'A'
                 enquiry.save()
+
+                full_name = enquiry.name
+                content = 'Hi, {} <br><br> Thank you for using SchoolPedia, <br>' \
+                          'Your enquiry is answered by SchoolPedia Admin! <br>' \
+                          'Q: {} <br>' \
+                          'A: {} <br><br>' \
+                          'Have a good day!'
+
+                send_email(
+                    enquiry.email,
+                    'SchoolPedia Registration',
+                    content.format(full_name, enquiry.message, new_answer.answer))
+
                 return HttpResponseRedirect(reverse('app:admin_enquiries'))
         else:
             form = EnquiryAnswerForm()
