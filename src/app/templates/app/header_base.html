@@ -1,6 +1,7 @@
 {% extends 'app/base.html' %}
 {% block body %}
     <body style="display: flex; flex-direction: column;">
+      <div class="ui grid" style="margin-bottom: 2rem;">
       <div class="two wide column"></div>
       <div class="twelve wide column">
             <div class="ui attached secondary menu" style="border: none;">
@@ -41,6 +42,7 @@
             </div>
         </div>
         <div class="two wide column"></div>
+      </div>
 
         <div class="ui text container" style="display: flex; flex: 1; margin-bottom: 14rem;">
             {% block content %}
