@@ -320,15 +320,7 @@
                     </div>
                     <button class="ui button" onclick="submitSearch()">Go</button>
                     <span id='curentLocationAddress'></span>
-                    {% if params.sortAsc %}
-                        <button class="ui icon button" onclick="sortAsc()" style="vertical-align: middle">
-                            <i class="sort alphabet ascending icon"></i>
-                        </button>
-                    {% else %}
-                        <button class="ui icon button" onclick="sortDesc()" style="vertical-align: middle">
-                            <i class="sort alphabet descending icon"></i>
-                        </button>
-                    {% endif %}
+                  
                 </div>
                 <div class="two wide column"></div>
                 <div class="two wide column"></div>
@@ -342,6 +334,15 @@
                                 {{ item.alphabet }}
                             </a>
                         {% endfor %}
+						  {% if params.sortAsc %}
+                       <a class="item right aligned" onclick="sortAsc()">
+                            <i class="sort alphabet ascending icon"></i>
+                        </a>
+                    {% else %}
+                        <a class="item right aligned" onclick="sortDesc()">
+                            <i class="sort alphabet descending icon"></i>
+                        </a>
+                    {% endif %}
                     </div>
 
                 </div>
@@ -419,7 +420,7 @@
                                                     </a>
                                                 {% else %}
                                                     <a class="ui yellow disabled label">
-                                                        Max 4 comparison
+                                                        Max 6 comparison
                                                     </a>
                                                 {% endif %}
                                             {% endif %}
