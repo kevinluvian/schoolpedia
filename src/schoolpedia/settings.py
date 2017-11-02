@@ -33,7 +33,7 @@ if env == 'True':
     DEBUG = False
 else:
     DEBUG = True
-print(DEBUG)
+
 ALLOWED_HOSTS = [
     'schoolpedia.herokuapp.com',
     'localhost',

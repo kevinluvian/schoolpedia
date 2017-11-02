@@ -5,8 +5,7 @@ from sso import views
 app_name = 'sso'
 urlpatterns = [
     url(r'^login/$',
-        auth_views.login,
-        {'template_name': 'sso/login/index.html'},
+        views.LoginView.as_view(template_name='sso/login/index.html'),
         name='login'),
     url(r'^register/$',
         views.register,

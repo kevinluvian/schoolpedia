@@ -4,6 +4,14 @@ from sso.forms import UserCreationForm
 from sso.utils import send_email
 import random
 import string
+from django.contrib.auth.views import LoginView as AuthLoginView
+
+
+class LoginView(AuthLoginView):
+    def get_redirect_url(self):
+        if self.request.user.is_superuser:
+            return '/admin'
+        return super(LoginView, self).get_redirect_url()
 
 
 def register(request):

@@ -12,6 +12,7 @@ class PublicView():
     def school_list(request):
         latitude, longitude, has_coordinate = utils.get_coordinate_from_request(request)
         queryset = School.objects.all()
+        queryset_without_alphabet = queryset
 
         if request.GET:
             if 'school_name' in request.GET:
@@ -90,10 +91,10 @@ class PublicView():
                     Q(mothertongue1_code='Tamil') | Q(mothertongue2_code='Tamil') | Q(mothertongue3_code='Tamil')
                 )
 
-
             if 'sortAsc' in request.GET:
                 queryset = queryset.order_by('-school_name')
 
+            queryset_without_alphabet = queryset
             if 'alphabet' in request.GET:
                 queryset = queryset.filter(school_name__istartswith=request.GET['alphabet'])
 
@@ -111,15 +112,14 @@ class PublicView():
 
         compare_school_id_list = request.session.get('compare_school_id_list', [])
 
-        tmp_queryset = queryset.all()
+        tmp_queryset = queryset_without_alphabet.all()
         school_alphabet = [{'alphabet': chr(65 + x), 'disabled': True} for x in range(26)]
         for school in tmp_queryset:
             first_letter = school.school_name[0]
             idx = ord(first_letter.upper()) - 65
             school_alphabet[idx]['disabled'] = False
 
-
-        params_text_with_page = ''.join(['&{}={}'.format(x[0], x[1]) for x in request.GET.items()])
+        params_text_without_alphabet = ''.join(['&{}={}'.format(x[0], x[1]) for x in request.GET.items() if x[0] != 'alphabet'])
         params_text = ''.join(['&{}={}'.format(x[0], x[1]) for x in request.GET.items() if x[0] != 'page'])
 
         return render(request, 'app/school/school_list.html', {
@@ -129,7 +129,7 @@ class PublicView():
             'latitude': latitude,
             'longitude': longitude,
             'params_text': params_text,
-            'params_text_with_page': params_text_with_page,
+            'params_text_without_alphabet': params_text_without_alphabet,
             'school_alphabet': school_alphabet,
             'params': request.GET
         })

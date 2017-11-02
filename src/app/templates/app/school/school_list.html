@@ -54,6 +54,11 @@
             searchParams.delete('page');
             window.location.search = searchParams.toString();
         }
+        function removeAlphabet () {
+            var searchParams = new URLSearchParams(window.location.search);
+            searchParams.delete('alphabet');
+            window.location.search = searchParams.toString();
+        }
         function initMap() {
             var latStr = '{{ latitude }}';
             var lngStr = '{{ longitude }}';
@@ -310,48 +315,30 @@
                                     <input type="checkbox" id="tamilMT" {% if not params.tamilMT %}checked{% endif %}>
                                     <label>Tamil</label>
                                 </div>
-
-                                <!--<h4>Streams</h4>
-                                <div class="ui checked checkbox">
-                                    <input type="checkbox" id="stmExp" {% if not params.stmExp %}checked{% endif %}>
-                                    <label>Express</label>
-                                </div>
-                                <br>
-                                <div class="ui checked checkbox">
-                                    <input type="checkbox" id="stmNA" {% if not params.stmNA %}checked{% endif %}>
-                                    <label>Normal Academic</label>
-                                </div>
-                                <br>
-                                <div class="ui checked checkbox">
-                                    <input type="checkbox" id="stmNT" {% if not params.stmNT %}checked{% endif %}>
-                                    <label>Normal Technical</label>
-                                </div> -->
                             </div>
                         </div>
                     </div>
                     <button class="ui button" onclick="submitSearch()">Go</button>
-                    {% comment %}
-                        {% if has_coordinate == True %}
-                            location: {{ latitude }}, {{ longitude}}
-                        {% endif %}
-                    {% endcomment %}
-
                     <span id='curentLocationAddress'></span>
-
-					  {% if params.sortAsc %}
-                        <button class="ui button" onclick="sortAsc()"><i class="sort alphabet ascending icon"></i></button>
-						<a onclick="sortAsc()"><i class="sort alphabet ascending icon"></i></a>
+                    {% if params.sortAsc %}
+                        <button class="ui icon button" onclick="sortAsc()" style="vertical-align: middle">
+                            <i class="sort alphabet ascending icon"></i>
+                        </button>
                     {% else %}
-                        <button class="ui button" onclick="sortDesc()"><i class="sort alphabet descending icon"></i></button>
-						<a onclick="sortDesc()"><i class="sort alphabet descending icon"></i></a>
+                        <button class="ui icon button" onclick="sortDesc()" style="vertical-align: middle">
+                            <i class="sort alphabet descending icon"></i>
+                        </button>
                     {% endif %}
                 </div>
                 <div class="two wide column"></div>
                 <div class="two wide column"></div>
                 <div class="twelve wide column icon center aligned">
                     <div class="ui pagination menu small" style="width:100%">
+                        <a class="item" onclick="removeAlphabet()">
+                            ALL
+                        </a>
                         {% for item in school_alphabet %}
-                            <a class="{% if item.disabled %}disabled {% endif %}item" href="?alphabet={{item.alphabet}}{{ params_text_with_page }}">
+                            <a class="{% if item.disabled %}disabled {% endif %}item" href="?alphabet={{item.alphabet}}{{ params_text_without_alphabet }}">
                                 {{ item.alphabet }}
                             </a>
                         {% endfor %}
@@ -369,14 +356,14 @@
                         {% for school in school_list %}
                             <div class="ui segment">
                                 <div class="ui grid">
-                                    <div class="three wide column">
+                                    <div class="two wide column">
                                         <div class="ui image">
                                             <a href="{% url 'app:school_detail' school.id %}">
                                                 <img src="{% static school.logo_name %}" />
                                             </a>
                                         </div>
                                     </div>
-                                    <div class="thirteen wide column">
+                                    <div class="fourteen wide column">
                                         <a class="ui header" href="{% url 'app:school_detail' school.id %}">
                                             {{ school.school_name }}
                                         </a>
