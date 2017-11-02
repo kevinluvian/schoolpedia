@@ -85,8 +85,8 @@ class AdminView():
                 enquiry.save()
 
                 full_name = enquiry.name
-                content = 'Hi, {} <br><br> Thank you for using SchoolPedia, <br>' \
-                          'Your enquiry is answered by SchoolPedia Admin! <br>' \
+                content = 'Hi, {} <br><br> Thank you for using SchoolPedia. <br><br>' \
+                          'Your enquiry is answered by SchoolPedia Admin! <br><br>' \
                           'Q: {} <br>' \
                           'A: {} <br><br>' \
                           'Have a good day!'
