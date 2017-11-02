@@ -382,23 +382,25 @@
                                             </div>
                                         {% endif %}
 
-                                          <div class="ui horizontal segments" style="border:none">
-                                            <div class="ui segment" style="border:none">
+                                          <div class="ui horizontal contents" style="border:none">
+                                            <div class="ui item" style="border:none">
                                               <p>
                                                 {{ school.address }}
                                               </br>
                                                 {{ school.postal_code }}
                                               </p>
                                             </div>
-                                            <div class="ui segment" style="border:none">
+                                            <div class="ui item" style="border:none">
+                                              <left>
                                               <div>
                                 									<p>Express: {{ school.express_nonaff_lower }} - {{ school.express_nonaff_upper }}</p>
                                 									<p>Normal Academic: {{ school.normal_academic_nonaff_lower }} - {{ school.normal_academic_nonaff_upper}}</p>
                                 									<p>Normal Technical: {{ school.normal_technical_nonaff_lower }} - {{ school.normal_technical_nonaff_upper }}</p>
                                                 </div>
+                                              </left>
                                             </div>
                                             </div>
-                                            
+
                                         <div>
                                             {% if school|is_compared:request == True %}
                                                 <a class="ui red label" href="{% url 'app:remove_from_comparison' school.id %}">
