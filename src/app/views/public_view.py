@@ -20,21 +20,15 @@ class PublicView():
             if 'score' in request.GET:
                 try:
                     score = int(request.GET['score'])
-                    # filter score ada diantara express, normalacademic, atau normal technical
-                    # ga boleh null
+
+                    # ada between
                     queryset = queryset.filter(
-                        express_nonaff_lower__isnull=False,
-                        express_nonaff_upper__isnull=False,
-                        normal_technical_nonaff_upper__isnull=False,
-                        normal_technical_nonaff_lower__isnull=False,
-                        normal_academic_nonaff_upper__isnull=False,
-                        normal_academic_nonaff_lower__isnull=False
-                    )
-                    # ada diantara
-                    queryset = queryset.filter(
-                       (Q(express_nonaff_lower__lte=score) & Q(express_nonaff_upper__gte=score)) |
-                        (Q(normal_technical_nonaff_upper__gte=score) & Q(normal_technical_nonaff_lower__lte=score)) |
-                        (Q(normal_academic_nonaff_upper__gte=score) & Q(normal_academic_nonaff_lower__lte=score))
+                       (Q(express_nonaff_lower__isnull=False) & Q(express_nonaff_upper__isnull=False) &
+                        Q(express_nonaff_lower__lte=score) & Q(express_nonaff_upper__gte=score)) |
+                       (Q(normal_technical_nonaff_upper__isnull=False) & Q(normal_technical_nonaff_lower__isnull=False) &
+                        Q(normal_technical_nonaff_upper__gte=score) & Q(normal_technical_nonaff_lower__lte=score)) |
+                       (Q(normal_academic_nonaff_upper__isnull=False) & Q(normal_academic_nonaff_lower__isnull=False) &
+                        Q(normal_academic_nonaff_upper__gte=score) & Q(normal_academic_nonaff_lower__lte=score))
                     )
                 except ValueError:
                     pass
