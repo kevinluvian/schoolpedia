@@ -89,7 +89,7 @@
 
             distance = document.getElementById('distanceSchool')
             input = distance.querySelector('input')
-            if (input.value) {
+            if (input.value != 'ALL' && input.value) {
                 searchParams.set('distance', input.value)
             } else {
                 searchParams.delete('distance')
@@ -202,6 +202,11 @@
                     }
                 })
             $('.dropdown').dropdown();
+            $("#scoreSchool").keyup(function(event) {
+                if (event.keyCode === 13) {
+                    $("#submitSearchBtn").click();
+                }
+            });
         })
     </script>
 {% endblock %}
@@ -229,6 +234,7 @@
                       <i class="dropdown icon"></i>
                       <div class="default text">Enter distance in KM</div>
                       <div class="menu">
+                        <div class="item" data-value="ALL">ALL</div>
                         <div class="item" data-value="1">1</div>
                         <div class="item" data-value="2">2</div>
                         <div class="item" data-value="3">3</div>
@@ -319,23 +325,22 @@
                             </div>
                         </div>
                     </div>
-                    <button class="ui button" onclick="submitSearch()">Go</button>
+                    <button class="ui button" id="submitSearchBtn" onclick="submitSearch()">Go</button>
                     <span id='curentLocationAddress'></span>
-                  
                 </div>
                 <div class="two wide column"></div>
                 <div class="two wide column"></div>
                 <div class="twelve wide column icon center aligned">
                     <div class="ui pagination menu small" style="width:100%">
-                        <a class="item" onclick="removeAlphabet()">
+                        <a class="{% if not params.alphabet %}active {% endif %}item" onclick="removeAlphabet()">
                             ALL
                         </a>
                         {% for item in school_alphabet %}
-                            <a class="{% if item.disabled %}disabled {% endif %}item" href="?alphabet={{item.alphabet}}{{ params_text_without_alphabet }}">
+                            <a class="{% if item.disabled %}disabled {% endif %}{% if params.alphabet == item.alphabet %}active {% endif %}item" href="?alphabet={{item.alphabet}}{{ params_text_without_alphabet }}">
                                 {{ item.alphabet }}
                             </a>
                         {% endfor %}
-						  {% if params.sortAsc %}
+                          {% if params.sortAsc %}
                        <a class="item right aligned" onclick="sortAsc()">
                             <i class="sort alphabet ascending icon"></i>
                         </a>
@@ -397,9 +402,9 @@
                                                 </td>
                                                 <td style="border:none">
                                                   <div>
-                                    									<p>Express: {{ school.express_nonaff_lower }} - {{ school.express_nonaff_upper }}</p>
-                                    									<p>Normal Academic: {{ school.normal_academic_nonaff_lower }} - {{ school.normal_academic_nonaff_upper}}</p>
-                                    									<p>Normal Technical: {{ school.normal_technical_nonaff_lower }} - {{ school.normal_technical_nonaff_upper }}</p>
+                                                        <p>Express: {{ school.express_nonaff_lower }} - {{ school.express_nonaff_upper }}</p>
+                                                        <p>Normal Academic: {{ school.normal_academic_nonaff_lower }} - {{ school.normal_academic_nonaff_upper}}</p>
+                                                        <p>Normal Technical: {{ school.normal_technical_nonaff_lower }} - {{ school.normal_technical_nonaff_upper }}</p>
                                                     </div>
                                                 </td>
                                               </tr>

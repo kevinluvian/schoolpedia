@@ -23,12 +23,9 @@ class PublicView():
 
                     # ada between
                     queryset = queryset.filter(
-                       (Q(express_nonaff_lower__isnull=False) & Q(express_nonaff_upper__isnull=False) &
-                        Q(express_nonaff_lower__lte=score) & Q(express_nonaff_upper__gte=score)) |
-                       (Q(normal_technical_nonaff_upper__isnull=False) & Q(normal_technical_nonaff_lower__isnull=False) &
-                        Q(normal_technical_nonaff_upper__gte=score) & Q(normal_technical_nonaff_lower__lte=score)) |
-                       (Q(normal_academic_nonaff_upper__isnull=False) & Q(normal_academic_nonaff_lower__isnull=False) &
-                        Q(normal_academic_nonaff_upper__gte=score) & Q(normal_academic_nonaff_lower__lte=score))
+                       (Q(express_nonaff_lower__isnull=False) & Q(express_nonaff_lower__lte=score)) |
+                       (Q(normal_technical_nonaff_lower__isnull=False) & Q(normal_technical_nonaff_lower__lte=score)) |
+                       (Q(normal_academic_nonaff_lower__isnull=False) & Q(normal_academic_nonaff_lower__lte=score))
                     )
                 except ValueError:
                     pass
@@ -118,7 +115,7 @@ class PublicView():
 
         return render(request, 'app/school/school_list.html', {
             'school_list': school_list,
-            'allow_compare': len(compare_school_id_list) < 4,
+            'allow_compare': len(compare_school_id_list) < 6,
             'has_coordinate': has_coordinate,
             'latitude': latitude,
             'longitude': longitude,
@@ -168,7 +165,7 @@ class PublicView():
 
     def add_to_comparison(request, school_id):
         compare_school_id_list = request.session.get('compare_school_id_list', [])
-        if school_id not in compare_school_id_list and len(compare_school_id_list) < 4:
+        if school_id not in compare_school_id_list and len(compare_school_id_list) < 6:
             compare_school_id_list.append(school_id)
         request.session['compare_school_id_list'] = compare_school_id_list
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
