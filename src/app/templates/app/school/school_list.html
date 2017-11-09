@@ -81,8 +81,14 @@
         function submitSearch () {
             var searchParams = new URLSearchParams(window.location.search);
             score = document.getElementById('scoreSchool')
+
             if (score.value) {
+              if(score.value<=300 && score.value >=0)
                 searchParams.set('score', score.value)
+                else {
+                  $("#errorMessages").show().append('<li>Please enter valid PSLE score</li>');
+                    return;
+                }
             } else {
                 searchParams.delete('score')
             }
@@ -207,6 +213,8 @@
                     $("#submitSearchBtn").click();
                 }
             });
+
+              $("#errorMessages").hide();
         })
     </script>
 {% endblock %}
@@ -327,6 +335,7 @@
                     </div>
                     <button class="ui button" id="submitSearchBtn" onclick="submitSearch()">Go</button>
                     <span id='curentLocationAddress'></span>
+                    <ul class="ui error message" id="errorMessages"></ul>
                 </div>
                 <div class="two wide column"></div>
                 <div class="two wide column"></div>

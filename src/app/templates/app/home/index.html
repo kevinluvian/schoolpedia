@@ -1,5 +1,26 @@
 {% extends 'app/header_base.html' %}
 {% block content %}
+<script type="text/javascript">
+  $(document)
+    .ready(function() {
+      $('.ui.form')
+        .form({
+          fields: {
+            score: {
+              identifier  : 'score',
+              rules: [
+                {
+                  type   : 'integer[0..300]',
+                  prompt : 'Please enter valid PSLE score'
+                }
+              ]
+            }
+          }
+        })
+      ;
+    })
+  ;
+</script>
     <div class="ui one column center aligned grid" style="margin-top: auto; margin-bottom: auto; width: 100%">
         <div class="column">
             <div class="ui image">
@@ -11,10 +32,11 @@
                 <div class="ui grid">
                     <div class="two wide column"></div>
                     <div class="twelve wide column">
-                        <div class="ui action huge fluid input">
+                        <div class="ui action huge fluid input field">
                             <input type="text" placeholder="Enter PSLE Score" name="score">
                             <button class="ui teal button"><center>GO</center></button>
                         </div>
+                        <div class="ui error message"></div>                      
                     </div>
                     <div class="two wide column"></div>
                 </div>
