@@ -11,14 +11,14 @@
             <div class="ui header">
                 Bookmarks
             </div>
+            {% if bookmark_list|length == 0 %}
+              <div class="ui header">
+                  <center>
+                      You haven't added any school to bookmark list
+                  </center>
+              </div>
+          {% else %}
             <div class="ui segments">
-              {% if bookmark_list|length == 0 %}
-                <div class="ui header">
-                    <center>
-                        You haven't added any school to bookmark list
-                    </center>
-                </div>
-            {% else %}
                 {% for bookmark in bookmark_list %}
                     <div class="ui segment">
                         <div class="ui grid">
@@ -41,8 +41,8 @@
                         </div>
                     </div>
                 {% endfor %}
-              {% endif %}
             </div>
+            {% endif %}
         </div>
         <div class="two wide column"></div>
     </div>
