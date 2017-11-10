@@ -3,7 +3,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db.models import Avg
 
 
-class School(models.Model):
+class BaseSchool(models.Model):
     api_id = models.IntegerField(unique=True, blank=True, null=True, default=None)
     school_name = models.CharField(max_length=200)
     url_address = models.TextField()
@@ -40,24 +40,29 @@ class School(models.Model):
     mothertongue2_code = models.TextField()
     mothertongue3_code = models.TextField()
     special_sdp_offered = models.TextField()
-
     lat = models.FloatField(default=None, null=True, blank=True)
     lng = models.FloatField(default=None, null=True, blank=True)
+    logo_name = models.CharField(max_length=300, default='no-img.jpg')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        abstract = True
+
+    def get_overall_rating(self):
+        print(self.schoolcomment_set.all().aggregate(Avg('rating'))['rating__avg'])
+        return self.schoolcomment_set.all().aggregate(Avg('rating'))['rating__avg']
+
+
+class School(BaseSchool):
     express_nonaff_lower = models.IntegerField(default=None, null=True, blank=True)
     express_nonaff_upper = models.IntegerField(default=None, null=True, blank=True)
     normal_technical_nonaff_upper = models.IntegerField(default=None, null=True, blank=True)
     normal_technical_nonaff_lower = models.IntegerField(default=None, null=True, blank=True)
     normal_academic_nonaff_upper = models.IntegerField(default=None, null=True, blank=True)
     normal_academic_nonaff_lower = models.IntegerField(default=None, null=True, blank=True)
-    logo_name = models.CharField(max_length=300, default='no-img.jpg')
-    created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         ordering = ['school_name']
-
-    def get_overall_rating(self):
-        print(self.schoolcomment_set.all().aggregate(Avg('rating'))['rating__avg'])
-        return self.schoolcomment_set.all().aggregate(Avg('rating'))['rating__avg']
 
 
 class SchedulerLog(models.Model):
