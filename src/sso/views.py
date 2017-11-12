@@ -11,6 +11,8 @@ class LoginView(AuthLoginView):
     def get_redirect_url(self):
         if self.request.user.is_superuser:
             return '/admin'
+        if self.request.META.get('HTTP_REFERER')
+            return super(LoginView, self).get_redirect_url(self.request.META.get('HTTP_REFERER'))
         return super(LoginView, self).get_redirect_url()
 
 
