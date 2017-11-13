@@ -111,13 +111,13 @@
                             <td>Special Programme</td>
                             {% for school in compared_school_list %}
                                 <td>
-                                  {% if school.ip_ind = 'Yes'}
+                                  {% if school.ip_ind = 'Yes' %}
                                   <span>IP</span>
                                   {% endif %}
-                                  {% if school.sap_ind = 'Yes'}
+                                  {% if school.sap_ind = 'Yes'%}
                                   <span>SAP</span>
                                   {% endif %}
-                                  {% if school.ip_ind = 'No' and school.sap_ind = 'No'}
+                                  {% if school.ip_ind = 'No' and school.sap_ind = 'No' %}
                                   <span>Non-Sp</span>
                                   {% endif %}
                                 </td>
