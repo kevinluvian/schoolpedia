@@ -72,7 +72,7 @@
                             {% for school in compared_school_list %}
                                 <th>
                                     <a href="{% url 'app:school_detail' school.id %}">
-                                        <img class="ui mini image" src="{% static school.logo_name %}" />
+                                        <img class="ui small image" src="{% static school.logo_name %}" />
                                     </a>
                                 </th>
                             {% endfor %}
