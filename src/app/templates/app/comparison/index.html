@@ -98,13 +98,21 @@
                             {% endfor %}
                         </tr>
                         <tr>
-                            <td>Cut-Off Point</td>
+                            <td>Express</td>
                             {% for school in compared_school_list %}
-                                <td>
-                                  <p>Express: {{ school.express_nonaff_lower }} - {{ school.express_nonaff_upper }}</p>
-                                  <p>Normal Academic: {{ school.normal_academic_nonaff_lower }} - {{ school.normal_academic_nonaff_upper}}</p>
-                                  <p>Normal Technical: {{ school.normal_technical_nonaff_lower }} - {{ school.normal_technical_nonaff_upper }}</p>
-                                </td>
+                                <td>{{ school.express_nonaff_lower }} - {{ school.express_nonaff_upper }}</td>
+                            {% endfor %}
+                        </tr>
+                        <tr>
+                            <td>Normal Academic</td>
+                            {% for school in compared_school_list %}
+                                <td>{{ school.normal_academic_nonaff_lower }} - {{ school.normal_academic_nonaff_upper}}</td>
+                            {% endfor %}
+                        </tr>
+                        <tr>
+                            <td>Normal Technical</td>
+                            {% for school in compared_school_list %}
+                                <td>{{ school.normal_technical_nonaff_lower }} - {{ school.normal_technical_nonaff_upper }}</td>
                             {% endfor %}
                         </tr>
                         <tr>
