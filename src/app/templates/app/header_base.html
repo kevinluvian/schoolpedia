@@ -18,7 +18,7 @@
                 {% if user.is_authenticated %}
                     <div class="item">
                         <div class="ui buttons">
-                            <div class="ui button">Hi, {{ user }}</div>
+                            <a class="ui button" href="{% url 'app:profile' %}">Hi, {{ user }}</a>
                             <a class="ui primary button" href="{% url 'sso:logout' %}">Logout</a>
                         </div>
                     </div>

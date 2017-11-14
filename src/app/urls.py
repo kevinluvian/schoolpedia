@@ -20,6 +20,11 @@ urlpatterns = [
     url(r'^contact_us/$', PublicView.contact_us, name='contact_us'),
 
     # user views
+    url(r'^profile/$', UserView.profile, name='profile'),
+    url(r'^change_password/$', UserView.change_password, name='change_password'),
+    url(r'^change_profile/$', UserView.change_profile, name='change_profile'),
+    url(r'^deactivate_account/$', UserView.deactivate_account, name='deactivate_account'),
+
     url(r'^comments/(?P<comment_id>\d+)/report/$', UserView.report_comment, name='report_comment'),
 
     url(r'^bookmarks/$', UserView.bookmark_list, name='bookmark_list'),

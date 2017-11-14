@@ -93,6 +93,9 @@ class SchoolComment(models.Model):
     created_by = models.ForeignKey('sso.User')
     created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ['created_at']
+
 
 class Enquiry(models.Model):
     name = models.CharField(max_length=200)
@@ -108,6 +111,9 @@ class Enquiry(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ['created_at']
+
 
 class EnquiryAnswer(models.Model):
     enquiry = models.ForeignKey('app.Enquiry')
@@ -115,14 +121,23 @@ class EnquiryAnswer(models.Model):
     answered_by = models.ForeignKey('sso.User')
     created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ['created_at']
+
 
 class Bookmark(models.Model):
     user = models.ForeignKey('sso.User')
     school = models.ForeignKey('app.School')
     created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ['created_at']
+
 
 class ReportComment(models.Model):
     comment = models.ForeignKey('app.SchoolComment')
     reported_by = models.ForeignKey('sso.User')
     created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['created_at']

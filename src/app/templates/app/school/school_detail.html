@@ -114,11 +114,16 @@
                 {% endif %}
                 <div class="two wide column"></div>
                 <div class="twelve wide column">
-                    {% comment %}
-                        {% if has_coordinate == True %}
-                            [DEBUG] location: {{ latitude }}, {{ longitude}}
-                        {% endif %}
-                    {% endcomment %}
+                    {% if messages %}
+                        <div class="ui success message">
+                            <i class="close icon"></i>
+                            {% for message in messages %}
+                                <div class="header">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 </div>
                 <div class="two wide column"></div>
             </div>
@@ -199,15 +204,15 @@
 
 						{% if school.schoolcomment_set.exists %}
 						<div class="ui grid centered" style="margin-top:2%;margin-bottom:2%">
-                                    <div class="ui small statistic segment">
-                                        <div class="label">
-                                            Overall rating
-                                        </div>
-                                        <div class="value">
-                                            <div class="rating largetext">{{ school.get_overall_rating|floatformat:"1" }}</div>
-                                            <div class="ui star readonlyrating rating" data-rating="{{ school.get_overall_rating|floatformat:'0' }}" data-max-rating="5"></div>
-                                        </div>
-                                    </div>
+                            <div class="ui small statistic segment">
+                                <div class="label">
+                                    Overall rating
+                                </div>
+                                <div class="value">
+                                    <div class="rating largetext">{{ school.get_overall_rating|floatformat:"1" }}</div>
+                                    <div class="ui star readonlyrating rating" data-rating="{{ school.get_overall_rating|floatformat:'0' }}" data-max-rating="5"></div>
+                                </div>
+                            </div>
                          </div>
 						<center><div class="ui header">Reviews</div></center>
 						<div class="ui one columns grid" style="margin-top:2%">
@@ -219,9 +224,16 @@
 												<div class="content">
 													<div class="author">
 														{{ comment.created_by }}
+                                                        {% if not comment|is_not_reported_by:request.user %}
+                                                            <div class="ui red label">
+                                                                REPORTED!
+                                                            </div>
+                                                        {% endif %}
 													</div>
 													<div class="text">{{ comment.message }}</div>
-													<a href="{% url 'app:report_comment' comment.id %}" class="ui button">Report</a>
+                                                    {% if comment|is_not_reported_by:request.user %}
+                                                        <a href="{% url 'app:report_comment' comment.id %}" class="ui button">Report</a>
+                                                    {% endif %}
 												</div>
 											</div>
 										</div>
@@ -238,7 +250,7 @@
 					 {% if user.is_authenticated %}
 						<button style="margin-top:2%" class="ui primary button" id="reviewBtn" onclick="writeReview()">Write a Review</button>
 					 {% else %}
-					 	<a style="margin-top:2%" class="ui primary button" href="{% url 'sso:login' %}">Login to Review</a>
+					 	<a style="margin-top:2%" class="ui primary button" href="{% url 'sso:login' %}?next=/schools/{{ school.id }}/">Login to Review</a>
 					 {% endif %}
 				 </center>
                             </div>

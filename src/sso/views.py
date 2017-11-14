@@ -70,11 +70,3 @@ def verify(request, token):
             request,
             'sso/register/username_already_validated.html',
         )
-
-
-def forgot_password(request):
-    pass
-
-
-def reset_password(request):
-    pass

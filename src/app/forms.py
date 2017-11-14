@@ -1,5 +1,6 @@
 from django import forms
 from app.models import Enquiry, SchoolComment, School, EnquiryAnswer
+from sso.models import User
 
 
 class EnquiryForm(forms.ModelForm):
@@ -34,3 +35,9 @@ class EnquiryAnswerForm(forms.ModelForm):
     class Meta:
         model = EnquiryAnswer
         fields = ('answer',)
+
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('email',)

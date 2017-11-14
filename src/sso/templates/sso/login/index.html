@@ -72,7 +72,7 @@ $(document)
                         </div>
                     </div>
                     {% csrf_token %}
-                    <input type="hidden" name="next" value="/"></input>
+                    <input type="hidden" name="next" value="{% if next %}{{ next }}{% else %}/{% endif %}"></input>
                     <button class="ui fluid large teal submit button">Login</button>
                 </div>
                 {% if form.errors %}
