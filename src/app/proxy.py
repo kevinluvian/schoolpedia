@@ -6,8 +6,9 @@ from django.db.models import Q
 class SecondarySchoolProxy(School):
     objects = SecondarySchoolManager()
 
-    def get_schools_satisfy_psle(self, score):
-        queryset = self.objects.all()
+    @staticmethod
+    def get_schools_satisfy_psle(score):
+        queryset = SecondarySchoolProxy.objects.all()
         queryset.filter(
            (Q(express_nonaff_lower__isnull=False) & Q(express_nonaff_lower__lte=score)) |
            (Q(normal_technical_nonaff_lower__isnull=False) & Q(normal_technical_nonaff_lower__lte=score)) |
