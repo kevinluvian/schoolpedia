@@ -5,8 +5,9 @@ from django.shortcuts import (
 )
 from django.urls import reverse
 from app.models import (
-    School, Bookmark, SchoolComment, ReportComment
+    Bookmark, SchoolComment, ReportComment
 )
+from app.proxy import SecondarySchoolProxy
 from sso.models import User
 from app.forms import ProfileForm
 from django.contrib import messages
@@ -21,7 +22,7 @@ class UserView():
     def bookmark(request, school_id):
         latitude, longitude, has_coordinate = utils.get_coordinate_from_request(request)
         user = request.user
-        school = get_object_or_404(School, id=school_id)
+        school = get_object_or_404(SecondarySchoolProxy, id=school_id)
         new_bookmark = Bookmark(
             user=user,
             school=school
@@ -37,7 +38,7 @@ class UserView():
     def unbookmark(request, school_id):
         latitude, longitude, has_coordinate = utils.get_coordinate_from_request(request)
         user = request.user
-        school = get_object_or_404(School, id=school_id)
+        school = get_object_or_404(SecondarySchoolProxy, id=school_id)
         try:
             bookmark = Bookmark.objects.get(user=user, school=school)
             bookmark.delete()

@@ -1,7 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm as DjangoUserCreationForm
 from django import forms
 from sso.models import User
-import pdb
 
 
 class UserCreationForm(DjangoUserCreationForm):

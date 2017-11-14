@@ -1,6 +1,9 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db.models import Avg
+from django.dispatch import receiver
+from django.conf import settings
+from sso.utils import send_email
 
 
 class BaseSchool(models.Model):
@@ -31,11 +34,11 @@ class BaseSchool(models.Model):
     type_code = models.TextField()
     nature_code = models.TextField()
     session_code = models.TextField()
-    mainlevel_code = models.TextField()
     sap_ind = models.TextField()
     autonomous_ind = models.TextField()
     gifted_ind = models.TextField()
     ip_ind = models.TextField()
+    mainlevel_code = models.TextField()
     mothertongue1_code = models.TextField()
     mothertongue2_code = models.TextField()
     mothertongue3_code = models.TextField()
@@ -50,6 +53,10 @@ class BaseSchool(models.Model):
 
     def get_overall_rating(self):
         return self.schoolcomment_set.all().aggregate(Avg('rating'))['rating__avg']
+
+
+class OtherSchool(BaseSchool):
+    pass
 
 
 class School(BaseSchool):
@@ -73,10 +80,14 @@ class SchedulerLog(models.Model):
         )
     )
     school = models.ForeignKey('app.School', blank=True, null=True, default=None)
+    other_school = models.ForeignKey('app.OtherSchool', blank=True, null=True, default=None)
     field = models.CharField(max_length=30)
     previous_data = models.TextField()
     new_data = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at']
 
 
 class SchoolComment(models.Model):
@@ -140,3 +151,17 @@ class ReportComment(models.Model):
 
     class Meta:
         ordering = ['created_at']
+
+
+@receiver(models.signals.post_save, sender=ReportComment)
+def execute_after_save(sender, instance, created, raw, *args, **kwargs):
+    if created and not raw:
+        # when there is a new report
+        for name, email in settings.ADMINS:
+            content = 'Hi, {} <br><br> There is a new report submitted. <br><br>' \
+                        'Details: <br>' \
+                        '{}: {} <br>'
+            send_email(
+                email,
+                'New Report',
+                content.format(name, instance.reported_by.get_full_name(), instance.comment.message))

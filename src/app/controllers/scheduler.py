@@ -1,7 +1,8 @@
 import requests
-from app.models import School, SchedulerLog
+from app.models import School, SchedulerLog, OtherSchool
+from app.factory import SchoolFactory
 from django.db import transaction
-from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import user_passes_test
 
 
@@ -57,36 +58,49 @@ def insert_school_to_db(school):
             print('Key not found! ', key)
             # TODO: add error here
 
-    # if the school is not secondary, skip it
-    if ('mainlevel_code' in school_kwargs and
-            school_kwargs['mainlevel_code'] != 'SECONDARY' and school_kwargs['mainlevel_code'] != 'MIXED LEVEL'):
-        return
-
     # try to find if school already exists
     try:
         # if exists, check whether the data is updated
         # if the data is not updated, update it and create update log
-        school = School.objects.get(api_id=school_kwargs['api_id'])
+        if school_kwargs['mainlevel_code'] == 'SECONDARY' or school_kwargs['mainlevel_code'] == 'MIXED LEVEL':
+            school = School.objects.get(api_id=school_kwargs['api_id'])
+        else:
+            school = OtherSchool.objects.get(api_id=school_kwargs['api_id'])
         for key in school_kwargs:
             if school_kwargs[key] != getattr(school, key):
-                new_log = SchedulerLog(
-                    school=school,
-                    field=key,
-                    type='U',
-                    previous_data=getattr(school, key),
-                    new_data=school_kwargs[key]
-                )
+                if school.mainlevel_code == 'SECONDARY' or school.mainlevel_code == 'MIXED LEVEL':
+                    new_log = SchedulerLog(
+                        school=school,
+                        field=key,
+                        type='U',
+                        previous_data=getattr(school, key),
+                        new_data=school_kwargs[key]
+                    )
+                else:
+                    new_log = SchedulerLog(
+                        other_school=school,
+                        field=key,
+                        type='U',
+                        previous_data=getattr(school, key),
+                        new_data=school_kwargs[key]
+                    )
                 new_log.save()
                 setattr(school, key, school_kwargs[key])
         school.save()
     except School.DoesNotExist:
         # if does not exists, create a new school, and add new entry log
-        new_school = School(**school_kwargs)
+        new_school = SchoolFactory(school_kwargs)
         new_school.save()
-        new_log = SchedulerLog(
-            school=new_school,
-            type='N'
-        )
+        if new_school.mainlevel_code == 'SECONDARY' or new_school.mainlevel_code == 'MIXED LEVEL':
+            new_log = SchedulerLog(
+                school=new_school,
+                type='N'
+            )
+        else:
+            new_log = SchedulerLog(
+                other_school=new_school,
+                type='N'
+            )
         new_log.save()
 
 
@@ -108,4 +122,4 @@ def update_school_data(request):
             response = requests.get(BASE_API_URL.format(next_url))
         else:
             break
-    return HttpResponse('ok')
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

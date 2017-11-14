@@ -44,6 +44,8 @@ ALLOWED_HOSTS = [
 
 LOGIN_URL = '/sso/login/'
 
+ADMINS = [('Kevin', 'kevinlsmak1@gmail.com'), ('admin', 'schoolpediacz2006@gmail.com')]
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -72,7 +74,7 @@ ROOT_URLCONF = 'schoolpedia.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['app/views', 'sso/views'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

@@ -1,34 +1,28 @@
-from app.models import School, SchoolComment
+from app.models import SchoolComment
+from app.proxy import SecondarySchoolProxy
 from app.forms import EnquiryForm, CommentForm
 from django.shortcuts import render
 from app import utils
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponseRedirect
-from django.urls import reverse
 from django.db.models import Q
 
 
 class PublicView():
     def school_list(request):
         latitude, longitude, has_coordinate = utils.get_coordinate_from_request(request)
-        queryset = School.objects.all()
+        queryset = SecondarySchoolProxy.objects.all()
         queryset_without_alphabet = queryset
 
         if request.GET:
-            if 'school_name' in request.GET:
-                queryset = queryset.filter(school_name__icontains=request.GET['school_name'])
             if 'score' in request.GET:
                 try:
                     score = int(request.GET['score'])
-
-                    # ada between
-                    queryset = queryset.filter(
-                       (Q(express_nonaff_lower__isnull=False) & Q(express_nonaff_lower__lte=score)) |
-                       (Q(normal_technical_nonaff_lower__isnull=False) & Q(normal_technical_nonaff_lower__lte=score)) |
-                       (Q(normal_academic_nonaff_lower__isnull=False) & Q(normal_academic_nonaff_lower__lte=score))
-                    )
+                    queryset = SecondarySchoolProxy.get_schools_satisfy_psle(score)
                 except ValueError:
                     pass
+            if 'school_name' in request.GET:
+                queryset = queryset.filter(school_name__icontains=request.GET['school_name'])
             if 'distance' in request.GET and 'latitude' in request.GET and 'longitude' in request.GET:
                 distance = float(request.GET['distance'])
                 latitude = float(request.GET['latitude'])
@@ -127,7 +121,7 @@ class PublicView():
 
     def school_detail(request, school_id):
         latitude, longitude, has_coordinate = utils.get_coordinate_from_request(request)
-        school = School.objects.get(id=school_id)
+        school = SecondarySchoolProxy.objects.get(id=school_id)
 
         # queryset and pagination
         queryset = SchoolComment.objects.filter(school=school)
@@ -179,7 +173,7 @@ class PublicView():
 
     def compare_schools(request):
         compare_school_id_list = request.session.get('compare_school_id_list', [])
-        compared_school_list = School.objects.filter(id__in=compare_school_id_list)
+        compared_school_list = SecondarySchoolProxy.objects.filter(id__in=compare_school_id_list)
         return render(request, 'app/comparison/index.html', {
             'compared_school_list': compared_school_list
         })

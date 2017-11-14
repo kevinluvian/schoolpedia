@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from app.models import ReportComment, School, Enquiry, SchoolComment
+from app.models import ReportComment, Enquiry, SchoolComment, SchedulerLog
+from app.proxy import SecondarySchoolProxy
 from sso.models import User
 from app.forms import SchoolForm, EnquiryAnswerForm
 from django.http import HttpResponseRedirect
@@ -12,6 +13,16 @@ class AdminView():
     @user_passes_test(lambda u: u.is_superuser)
     def index(request):
         return render(request, 'app/admin_base.html')
+
+    @user_passes_test(lambda u: u.is_superuser)
+    def scheduler_log_list(request):
+        scheduler_log_list = SchedulerLog.objects.all()
+        return render(request, 'app/admin/admin_scheduler_logs.html', {'active': 'scheduler', 'scheduler_log_list': scheduler_log_list})
+
+    @user_passes_test(lambda u: u.is_superuser)
+    def scheduler_log_detail(request, log_id):
+        scheduler_log = SchedulerLog.objects.get(id=log_id)
+        return render(request, 'app/admin/admin_scheduler_logs_detail.html', {'active': 'scheduler', 'scheduler_log': scheduler_log})
 
     @user_passes_test(lambda u: u.is_superuser)
     def user_list(request):
@@ -39,17 +50,17 @@ class AdminView():
 
     @user_passes_test(lambda u: u.is_superuser)
     def school_list(request):
-        school_list = School.objects.all()
+        school_list = SecondarySchoolProxy.objects.all()
         return render(request, 'app/admin/admin_schools.html', {'active': 'school', 'school_list': school_list})
 
     @user_passes_test(lambda u: u.is_superuser)
     def school_detail(request, school_id):
-        school = School.objects.get(id=school_id)
+        school = SecondarySchoolProxy.objects.get(id=school_id)
         return render(request, 'app/admin/admin_schools_detail.html', {'active': 'school', 'school': school})
 
     @user_passes_test(lambda u: u.is_superuser)
     def edit_school(request, school_id):
-        school = School.objects.get(id=school_id)
+        school = SecondarySchoolProxy.objects.get(id=school_id)
         if request.method == 'POST':
             form = SchoolForm(request.POST, instance=school)
             if form.is_valid():
@@ -62,7 +73,7 @@ class AdminView():
 
     @user_passes_test(lambda u: u.is_superuser)
     def delete_school(request, school_id):
-        school = School.objects.get(id=school_id)
+        school = SecondarySchoolProxy.objects.get(id=school_id)
         school.delete()
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
