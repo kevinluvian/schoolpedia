@@ -33,6 +33,55 @@
                 setTimeout(run, 1000);
             }
             run()
+            function initMap() {
+                var center = {
+                    lat: {{ school.lat }},
+                    lng: {{ school.lng }}
+                };
+
+                var map = new google.maps.Map(document.getElementById('map'), {
+                  zoom: 14,
+                  center: center
+                });
+
+
+                var marker = new google.maps.Marker({
+                    position: {
+                        lat: {{ school.lat }},
+                        lng: {{ school.lng }}
+                    },
+                    map: map,
+                    title: "{{ school.school_name }}"
+                });
+            }
+        </script>
+    {% else %}
+        <script>
+            function initMap() {
+                var directionsService = new google.maps.DirectionsService;
+                var directionsDisplay = new google.maps.DirectionsRenderer;
+                var latitude = {{ latitude }}
+                var longitude = {{ longitude }}
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 7,
+                    center: {
+                        lat: latitude,
+                        lng: longitude
+                    }
+                });
+                directionsDisplay.setMap(map);
+                directionsService.route({
+                    origin: new google.maps.LatLng(latitude, longitude),
+                    destination: new google.maps.LatLng({{ school.lat }}, {{ school.lng }}),
+                    travelMode: 'DRIVING'
+                }, function(response, status) {
+                    if (status === 'OK') {
+                        directionsDisplay.setDirections(response);
+                    } else {
+                        window.alert('Directions request failed due to ' + status);
+                    }
+                })
+            }
         </script>
     {% endif %}
     <script
@@ -47,27 +96,6 @@
             });
             $('.readonlyrating').rating('disable', true);
         });
-        function initMap() {
-            var center = {
-                lat: {{ school.lat }},
-                lng: {{ school.lng }}
-            };
-
-            var map = new google.maps.Map(document.getElementById('map'), {
-              zoom: 14,
-              center: center
-            });
-
-
-            var marker = new google.maps.Marker({
-                position: {
-                    lat: {{ school.lat }},
-                    lng: {{ school.lng }}
-                },
-                map: map,
-                title: "{{ school.school_name }}"
-            });
-        }
     </script>
 {% endblock %}
 
@@ -157,7 +185,7 @@
               </div>
 
                 <div class="sixteen wide column">
-                    <div id="map" style="height: 300px"></div>
+                    <div id="map" style="height: 500px"></div>
                 </div>
               </div>
             </div>
