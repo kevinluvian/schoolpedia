@@ -74,8 +74,8 @@ ROOT_URLCONF = 'schoolpedia.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['app/views', 'sso/views'],
-        'APP_DIRS': True,
+        'DIRS': ['app/views', 'sso/views', 'semanticui/templates'],
+        'APP_DIRS': False,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -160,4 +160,4 @@ EMAIL_HOST_PASSWORD = 'cz2006ntu'
 EMAIL_PORT = 465
 EMAIL_USE_SSL = True
 
-SECURE_SSL_REDIRECT = not DEBUG
+# SECURE_SSL_REDIRECT = not DEBUG
