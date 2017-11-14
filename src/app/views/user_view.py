@@ -50,6 +50,7 @@ class UserView():
         bookmark_list = Bookmark.objects.filter(user=user)
         return render(request, 'app/bookmark/index.html', {'bookmark_list': bookmark_list})
 
+    @login_required
     def report_comment(request, comment_id):
         comment = get_object_or_404(SchoolComment, id=comment_id)
         try:
