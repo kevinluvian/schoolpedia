@@ -49,7 +49,6 @@ class BaseSchool(models.Model):
         abstract = True
 
     def get_overall_rating(self):
-        print(self.schoolcomment_set.all().aggregate(Avg('rating'))['rating__avg'])
         return self.schoolcomment_set.all().aggregate(Avg('rating'))['rating__avg']
 
 

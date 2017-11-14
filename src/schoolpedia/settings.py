@@ -14,7 +14,7 @@ import os
 import raven
 
 RAVEN_CONFIG = {
-    'dsn': 'https://3ada55c64dc44413a65f60ee402747a3:dece101abe764dd7a92e5fbd833260b8@sentry.io/204897',
+    'dsn': 'https://a78f728e50804c39ae75f6dada57b9ba:a2deed4a0da446a7879e2b778de5c6d9@sentry.io/245042',
 }
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)

@@ -231,7 +231,7 @@
                                                         {% endif %}
 													</div>
 													<div class="text">{{ comment.message }}</div>
-                                                    {% if comment|is_not_reported_by:request.user %}
+                                                    {% if user.is_authenticated and comment|is_not_reported_by:request.user %}
                                                         <a href="{% url 'app:report_comment' comment.id %}" class="ui button">Report</a>
                                                     {% endif %}
 												</div>
