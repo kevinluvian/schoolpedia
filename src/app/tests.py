@@ -84,7 +84,7 @@ class AdminTest(TestCase):
 
     def test_user_should_not_be_able_to_access(self):
         self.client.login(username='kevin', password='secret')
-        response = self.client.get(reverse('sso:login'))
+        response = self.client.get(reverse('app:admin'))
         self.assertRedirects(response, reverse('sso:login') + '?next=' + reverse('app:admin'))
 
     def test_public_user_should_not_be_able_to_access(self):
