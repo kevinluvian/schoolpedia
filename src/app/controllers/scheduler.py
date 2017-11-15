@@ -87,7 +87,7 @@ def insert_school_to_db(school):
                 new_log.save()
                 setattr(school, key, school_kwargs[key])
         school.save()
-    except School.DoesNotExist:
+    except (School.DoesNotExist, OtherSchool.DoesNotExist):
         # if does not exists, create a new school, and add new entry log
         new_school = SchoolFactory(school_kwargs)
         new_school.save()
