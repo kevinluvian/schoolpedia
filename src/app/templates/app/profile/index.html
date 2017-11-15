@@ -12,14 +12,14 @@
 {% block content %}
     <div class="ui container">
         {% if messages %}
-            <div class="ui success message">
-                <i class="close icon"></i>
-                {% for message in messages %}
+            {% for message in messages %}
+                <div class="ui {{ message.tags }} message">
+                    <i class="close icon"></i>
                     <div class="header">
                         {{ message }}
                     </div>
-                {% endfor %}
-            </div>
+                </div>
+            {% endfor %}
         {% endif %}
         <div class="ui segment">
             <div class="ui two column grid">

@@ -6,6 +6,8 @@ from app import utils
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponseRedirect
 from django.db.models import Q
+from django.contrib import messages
+from django.urls import reverse
 
 
 class PublicView():
@@ -18,6 +20,9 @@ class PublicView():
             if 'score' in request.GET:
                 try:
                     score = int(request.GET['score'])
+                    if score > 300 or score < 0:
+                        messages.error(request, 'Please enter valid PSLE score')
+                        return HttpResponseRedirect(reverse('app:home'))
                     queryset = SecondarySchoolProxy.get_schools_satisfy_psle(score)
                 except ValueError:
                     pass

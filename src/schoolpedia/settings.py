@@ -161,3 +161,4 @@ EMAIL_PORT = 465
 EMAIL_USE_SSL = True
 
 # SECURE_SSL_REDIRECT = not DEBUG
+TEST_RUNNER = "redgreenunittest.django.runner.RedGreenDiscoverRunner"
