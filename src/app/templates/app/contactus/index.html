@@ -9,6 +9,13 @@
     <div class="ui container">
         <div class="ui grid" style="margin-top:5%">
             <div class="eleven wide column">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="ui {{ message.tags }} visible message">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
                 <form class="ui large form" method="POST">
                     {% csrf_token %}
                     <div class="ui stacked segment">
@@ -28,7 +35,7 @@
                             <label style="text-align:left">Email</label>
                             <div class="ui left icon input">
                                 <i class="user icon"></i>
-                                <input type="email" name="email" placeholder="E-mail address" required>
+                                <input type="text" name="email" placeholder="E-mail address" required>
                             </div>
                             {% if form.email.errors %}
                                 <div class="ui pointing red basic label">

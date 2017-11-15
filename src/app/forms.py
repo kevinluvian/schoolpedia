@@ -4,6 +4,8 @@ from sso.models import User
 
 
 class EnquiryForm(forms.ModelForm):
+    email = forms.EmailField()
+
     class Meta:
         model = Enquiry
         fields = ('name', 'email', 'message')

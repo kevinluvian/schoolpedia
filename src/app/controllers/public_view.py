@@ -8,6 +8,7 @@ from django.http import HttpResponseRedirect
 from django.db.models import Q
 from django.contrib import messages
 from django.urls import reverse
+from django.shortcuts import get_object_or_404
 
 
 class PublicView():
@@ -126,7 +127,7 @@ class PublicView():
 
     def school_detail(request, school_id):
         latitude, longitude, has_coordinate = utils.get_coordinate_from_request(request)
-        school = SecondarySchoolProxy.objects.get(id=school_id)
+        school = get_object_or_404(SecondarySchoolProxy, id=school_id)
 
         # queryset and pagination
         queryset = SchoolComment.objects.filter(school=school)
@@ -189,7 +190,8 @@ class PublicView():
             if form.is_valid():
                 new_enquiry = form.save(commit=False)
                 new_enquiry.save()
-                return HttpResponseRedirect("/")
+                messages.success(request, 'Successfully submit enquiry')
+                return HttpResponseRedirect(reverse('app:contact_us'))
         else:
             form = EnquiryForm()
         return render(request, 'app/contactus/index.html', {'form': form})
