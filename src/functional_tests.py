@@ -2,8 +2,13 @@ from selenium import webdriver
 import unittest
 from selenium.webdriver.common.keys import Keys
 import time
+import os
 
-DEBUG = False
+env = os.getenv('PROD', False)
+if env == 'True':
+    DEBUG = False
+else:
+    DEBUG = True
 
 
 class NewVisitorTest(unittest.TestCase):
