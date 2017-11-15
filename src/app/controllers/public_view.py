@@ -20,7 +20,7 @@ class PublicView():
         if request.GET:
             if 'score' in request.GET:
                 try:
-                    score = int(request.GET['score'])
+                    score = int(float(request.GET['score']))
                     if score > 300 or score < 0:
                         messages.error(request, 'Please enter valid PSLE score')
                         return HttpResponseRedirect(reverse('app:home'))
