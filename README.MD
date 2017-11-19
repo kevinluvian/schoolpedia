@@ -1,4 +1,4 @@
-# schoolpedia
+# Schoolpedia
 Schoolpedia is an app to help students to find schools easier
 
 ## Project Description
