@@ -1,5 +1,5 @@
 # Schoolpedia
-Schoolpedia is an app to help students to find schools easier
+Schoolpedia is an app to help students to find schools easier<br>
 This is a group project for CZ2006 in NTU
 
 ## Project Description
