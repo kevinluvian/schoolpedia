@@ -1,5 +1,6 @@
 # Schoolpedia
 Schoolpedia is an app to help students to find schools easier
+This is a group project for CZ2006 in NTU
 
 ## Project Description
 - The project language is python, and HTML for the frontend
